@@ -23,21 +23,22 @@ module.exports = function (sequelize, DataTypes) {
             }
         }
     });
+
     User.associate = function (models) {
 
-        User.belongsToMany(models.donatorcard, {
+        User.belongsToMany(models.DonatorCard, {
             through: {
-                model: models.request
+                model: models.Request
             }
         });
-        
+
     };
 
     User.associate = function (models) {
 
-        User.belongsToMany(models.requestorcard, {
+        User.belongsToMany(models.RequestorCard, {
             through: {
-                model: models.donation
+                model: models.Donation
             }
         });
 
