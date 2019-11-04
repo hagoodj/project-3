@@ -3,10 +3,6 @@ module.exports = function (sequelize, DataTypes) {
 
     var DonatorCard = sequelize.define('DonatorCard', {
 
-        userid: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
         startdate: {
             type: DataTypes.DATE,
             allowNull: false,
@@ -38,7 +34,7 @@ module.exports = function (sequelize, DataTypes) {
     
     DonatorCard.associate = function (models) {
 
-        DonatorCard.belongsToOne(models.User, {
+        DonatorCard.belongsTo(models.User, {
             through: {
                 model: models.Request
             }
