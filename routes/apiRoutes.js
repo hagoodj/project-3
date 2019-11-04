@@ -3,12 +3,21 @@ var path = require("path");
 
 module.exports = function(app) {
 
-    app.get("/", function(req, res){
+    app.get("/form", function(req, res){
         res.sendFile(path.join(__dirname + "/../public/assets/form.html"));
     })
 
     // To retrive all donator cards from database
-    
+    app.get("/", function(req, res){
+        db.DonatorCard.findAll({}).then(function(result){
+            console.log(result);
+            donatorCard = {
+                result: result
+            }
+        res.render("index", donatorCard);
+    })
+    })
+
     // Server side javascript to create a new donator card
     app.post("/api/new/donatorcard", function(req, res){
 
