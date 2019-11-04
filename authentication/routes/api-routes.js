@@ -66,3 +66,7 @@ module.exports = function (app) {
             })
         })
     })
+
+    async function newFunction(promise) {
+        return await promise;
+    }

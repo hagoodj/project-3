@@ -1,0 +1,48 @@
+body {
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+textarea {
+    resize: none;
+}
+
+/* nav {
+    background: black !important;
+    border-bottom: solid black 1px;
+    filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.5)) 
+} */
+
+h8 {
+    color: grey;
+    font-family: 'Gotham';
+    font-size: 12px;
+    margin-left: 115px;
+}
+
+#jobpost {
+    height: 350px;
+    width: 300px;
+}
+
+@media screen and (max-width: 1024px){
+    img.bg {
+    left: 50%;
+    margin-left: -512px; }
+}
+
+.menu {
+    z-index: 1;
+}
+
+#bigdiv {
+    position: relative;    
+}
+
+img {
+    position: absolute;
+} 
+
+
