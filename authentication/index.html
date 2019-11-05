@@ -27,21 +27,21 @@
             <form class="form-inline mr-auto">
             </form>
             <div id="navbar">
-                <a class="navbar-brand" href="#">
-                    <p>Log in</p>
+                <a data-toggle="modal" data-target="#loginModal" class="navbar-brand" href="#">
+                    Log in
                 </a>
-                <a class="navbar-brand" href="#">
-                    <p>Sign up</p>
+                <a data-toggle="modal" data-target="#signupModal" class="navbar-brand" href="#">
+                    Sign up
                 </a>
             </div>
         </nav>
 
         <div id="littlediv">
             <img src="public/img/background.png" class="card-img" alt="...">
-            <div class="card-img-overlay">
-            </div>
+            <!-- <div class="card-img-overlay">
+            </div> -->
         </div>
-        <div id="landing" class="modal" tabindex="-1" role="dialog">
+        <div id="loginModal" class="modal" tabindex="1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="text-center">
@@ -49,17 +49,34 @@
                         <h7>Where giving and receiving is second nature.</h7>
                     </div>
                     <div class="modal-body">
-                        <input class="form-control form-control-lg" type="text" placeholder="Email"><br>
-                        <input class="form-control form-control-lg" type="text" placeholder="Career"><br>
+                        <input class="form-control form-control-lg" type="text" placeholder="Username"><br>
+                        <input class="form-control form-control-lg" type="text" placeholder="Password"><br>
                     </div>
                     <div class="text-center">
                         <button id="login" type="button" class="btn btn-danger btn-lg btn-block">Log in</button>
                     </div>
-                    <h8>SIGN UP FOR FREE</h8>
                 </div>
             </div>
         </div>
+        <div id="signupModal" class="modal" tabindex="1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="text-center">
+                            <h5>Welcome to Donation Station</h5>
+                            <h7>Where giving and receiving is second nature.</h7>
+                        </div>
+                        <div class="modal-body">
+                            <input class="form-control form-control-lg" type="text" placeholder="Username"><br>
+                            <input class="form-control form-control-lg" type="text" placeholder="Password"><br>
+                        </div>
+                        <div class="text-center">
+                            <button id="signup" type="button" class="btn btn-danger btn-lg btn-block">Sign up</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
