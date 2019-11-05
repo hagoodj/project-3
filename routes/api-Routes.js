@@ -4,16 +4,16 @@ var path = require('path');
 module.exports = function (app) {
 
     app.get("/requestorcardform", function (req,res) {
-        res.sendFile(path.join(__dirname + "public/assets/requestorcardform.html"));
+        res.sendFile(path.join(__dirname + "/../public/assets/requestorcardform.html"));
     })
 
-    app.get("/api/requestorcards", function (req, res) {
+    app.get("/", function (req, res) {
 
         db.RequestorCard.findAll({}).then(function (data) {
-            var reuestorCardObject = {
+            var requestorCardObject = {
                 requestorCards: data
             };
-            res.render("index2", reuestorCardObject)
+            res.render("index2", requestorCardObject)
         });
 
     });
