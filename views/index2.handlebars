@@ -12,7 +12,7 @@
         <img class="card-img-top" src="{{image}}" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">{{category}}</h5>
-            <h5 class="card-title">{{item}} {{itemnumber}}</h5>
+            <h5 class="card-title">{{item}} {{numberneeded}}</h5>
             <p class="card-text">Location: {{location}}</p>
             <a href="#" class="btn btn-primary donate" data-id="{{id}}" data-toggle="modal" data-target="#donateModal">Make Donation</a>
         </div>
@@ -92,14 +92,14 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="location">How much of this item are you able to donate?</label>
-                        <input type="location" class="form-control" id="offerDonationNumber"
+                        <label for="donation">How much of this item are you able to donate?</label>
+                        <input type="integer" class="form-control" id="offerDonationNumber"
                             aria-describedby="emailHelp" placeholder="#">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" id="offerDonation" data-dismiss="modal">Submit</button>
+                <button type="submit" class="btn btn-primary" id="offerDonation" data-dismiss="modal">Offer Donation</button>
             </div>
         </div>
 

@@ -26,4 +26,12 @@ module.exports = function (app) {
 
     });
 
+    app.post("/api/new/donation", function (req, res) {
+
+        db.Donation.create(req.body).then(function (dbDonation) {
+            res.json(dbDonation);
+        });
+
+    });
+
 }
