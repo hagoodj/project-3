@@ -3,6 +3,9 @@
 
 // Make sures that the whole document is ready
 $(document).ready(function () {
+    var id;
+    var userId = 1;
+    var donatorCardId = 1;
     // Grab all values entered by user when submit button is clicked
     $("#submit-btn").on("click", function (event) {
         event.preventDefault();
@@ -56,11 +59,53 @@ $(document).ready(function () {
     })
 
     // On click of request donation button
-    $("#requestDonation").on("click", function(event){
+    // $("#requestDonation").on("click", function (event) {
+        $(document).on("click", "#requestDonation", function(event){
         event.preventDefault();
+        id=$(this).data("id");
+        console.log(id);
         console.log("Inside request donation button");
         $("#request-donation-modal").modal("toggle");
     })
 
-    
+    // When user clicks request button, values are entered to request table
+    $("#request-btn").on("click", function (event) {
+        event.preventDefault();
+        var amount = $("#input-amount").val().trim();
+        console.log(amount);
+        // populateRequest(amount);
+        updateDonatorCards(amount, id);
+    })
+
+    function populateRequest(amount) {
+        console.log("Inside populate request");
+        var data = {
+            amount: amount,
+            userId: userId,
+            donatorCardId: donatorCardId
+        }
+        // Post a new value to database
+        $.ajax("/api/new/request", {
+            type: "POST",
+            data: data
+        }).then(function () {
+            console.log("Inserted into Request table");
+        })
+    }
+
+    function updateDonatorCards(amount, id) {
+        var newAmount = {
+            amount: amount
+        }
+        $.ajax("/api/donator/update/" + id, {
+            type: "PUT",
+            data: newAmount
+            }).then(
+            function(){
+            console.log("Updated");
+            }
+            )
+    }
+
+
 })

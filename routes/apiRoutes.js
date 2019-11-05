@@ -14,6 +14,7 @@ module.exports = function(app) {
             donatorCard = {
                 result: result
             }
+            console.log(donatorCard.result);
         res.render("index", donatorCard);
     })
     })
@@ -35,4 +36,43 @@ module.exports = function(app) {
             console.log(err);
         })
     })
+
+        // Server side javascript to create a new request
+        app.post("/api/new/request", function(req, res){
+            console.log(req.body);
+            console.log("Inside new request table");
+
+            db.Request.create({
+                amount:req.body.amount,
+                UserId: req.body.userId,
+                DonatorCardId: req.body.donatorCardId
+            }).then(function(result){
+                res.json(result);
+            }).catch(function(err){
+                console.log(err);
+            })
+        })
+
+        // To update donatorCard table
+        app.put("/api/donator/update/:id", function(req, res){
+            var id = req.params.id;
+            var amount = req.body.amount;
+
+            console.log("CHECK");
+            db.DonatorCard.findOne({
+                where: {id: id}
+            }).then(function(result){
+                console.log("Find Onequery result");
+                console.log(result.itemnumber);
+                db.DonatorCard.update({
+                    itemnumber: result.itemnumber - amount
+                  }, {
+                    where: {
+                      id: id
+                    }
+                  })
+            })
+
+            
+        })
 }
