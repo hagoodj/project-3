@@ -37,4 +37,18 @@ $(document).ready(function(){
         })
 
     }
+
+    // On click of add button generates a modal with a form to add new card
+    $("#add-btn").on("click", function(event){
+        event.preventDefault();
+        console.log("Inside add button");
+        $("#add-modal").modal("toggle");
+    })
+
+    // On click of close button in modal refreshes page
+    $("#modal-close").on("click", function(event){
+        event.preventDefault();
+        console.log("Inside close modal button");
+        location.reload();
+    })
 })
