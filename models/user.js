@@ -32,10 +32,6 @@ module.exports = function (sequelize, DataTypes) {
             }
         });
 
-    };
-
-    User.associate = function (models) {
-
         User.belongsToMany(models.RequestorCard, {
             through: {
                 model: models.Donation

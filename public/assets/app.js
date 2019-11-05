@@ -1,7 +1,10 @@
+// Validate.js dependency
+// var validate = require("validate.js");
+
 // Make sures that the whole document is ready
-$(document).ready(function(){
+$(document).ready(function () {
     // Grab all values entered by user when submit button is clicked
-    $("#submit-btn").on("click", function(event){
+    $("#submit-btn").on("click", function (event) {
         event.preventDefault();
 
         var startDate = $("#input-sdate").val().trim();
@@ -39,16 +42,25 @@ $(document).ready(function(){
     }
 
     // On click of add button generates a modal with a form to add new card
-    $("#add-btn").on("click", function(event){
+    $("#add-btn").on("click", function (event) {
         event.preventDefault();
         console.log("Inside add button");
         $("#add-modal").modal("toggle");
     })
 
     // On click of close button in modal refreshes page
-    $("#modal-close").on("click", function(event){
+    $("#modal-close").on("click", function (event) {
         event.preventDefault();
         console.log("Inside close modal button");
         location.reload();
     })
+
+    // On click of request donation button
+    $("#requestDonation").on("click", function(event){
+        event.preventDefault();
+        console.log("Inside request donation button");
+        $("#request-donation-modal").modal("toggle");
+    })
+
+    
 })
