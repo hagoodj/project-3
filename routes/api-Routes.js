@@ -7,7 +7,7 @@ module.exports = function (app) {
         res.sendFile(path.join(__dirname + "/../public/assets/requestorcardform.html"));
     })
 
-    app.get("/", function (req, res) {
+    app.get("/:id", function (req, res) {
 
         db.RequestorCard.findAll({}).then(function (data) {
             var requestorCardObject = {

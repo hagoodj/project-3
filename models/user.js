@@ -6,14 +6,14 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                len: [6, 10]
+                len: [5, 10]
             }
         },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                len: [6, 10]
+                len: [5, 10]
             }
         },
         email: {
