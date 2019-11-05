@@ -18,6 +18,7 @@ $(document).ready(function () {
         var location = $("#input-location").val().trim();
         var image = $("#input-image").val().trim();
 
+        checkNumberOfItems();
         populateDonatorCards(startDate, endDate, category, item, noOfItems, location, image);
     })
 
@@ -55,7 +56,7 @@ $(document).ready(function () {
     $("#modal-close").on("click", function (event) {
         event.preventDefault();
         console.log("Inside close modal button");
-        location.reload();
+        // location.reload();
     })
 
     // On click of request donation button
@@ -105,6 +106,27 @@ $(document).ready(function () {
             console.log("Updated");
             }
             )
+    }
+
+    // Function to check if number of items in card is zero
+    function checkNumberOfItems() {
+        $.ajax("/api/itemsnumber", {
+            type: "GET"
+        }).then(
+            function(result){
+                console.log(result);
+                for(var i=0; i<result.length; i++){
+                    if(result[i].itemnumber === 0 ){
+                        deleteItems(result[i].id);
+                    }
+                }
+            }
+        )
+    }
+
+    // Function to delete items that has zero number of items
+    function deleteItems(id) {
+        // Code here
     }
 
 

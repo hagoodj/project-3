@@ -75,4 +75,16 @@ module.exports = function(app) {
 
             
         })
+
+        // To check number of items for a particular id
+        app.get("/api/itemsnumber", function(req, res){
+            db.DonatorCard.findAll({
+            }).then(function(result){
+                console.log("FIND ALL QUERY RESULT");
+                console.log(result);
+                console.log(result.itemnumber);
+                res.send(result);
+            })
+
+        })
 }

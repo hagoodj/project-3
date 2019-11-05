@@ -36,7 +36,7 @@
       </div>
       <div class="modal-body">
         <!-- Form -->
-        <form name="donator-form">
+        <form data-toggle="validator" role="form">
           <div class="form-group">
             <label for="sdate">Start Date</label>
             <input type="sdate" class="form-control" id="input-sdate" aria-describedby="emailHelp"
@@ -66,8 +66,8 @@
             placeholder="Enter number of items you wish to donate" name="noOfItems">
           <div class="form-group">
             <label for="location">Location</label>
-            <input type="location" class="form-control" id="input-location" aria-describedby="emailHelp"
-              placeholder="Your location" name="location">
+            <input type="text" class="form-control" id="input-location" aria-describedby="emailHelp"
+              placeholder="Your location" name="location" required>
           </div>
           <div class="form-group">
             <label for="image">Image</label>
