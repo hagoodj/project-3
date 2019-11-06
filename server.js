@@ -19,6 +19,9 @@ app.set("view engine", "handlebars");
 
 // Routes
 require("./routes/apiRoutes.js")(app);
+require("./routes/api-Routes.js")(app);
+require("./authentication/routes/api-routes.js")(app);
+require("./authentication/routes/html-routes.js")(app);
 
 // Requiring our models for syncing
 var db = require("./models");

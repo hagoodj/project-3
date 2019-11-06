@@ -8,7 +8,14 @@ module.exports = function(app) {
     })
 
     // To retrive all donator cards from database
-    app.get("/", function(req, res){
+    app.get("/:id", function(req, res){
+        
+        db.RequestorCard.findAll({}).then(function (data) {
+            var requestorCardObject = {
+                requestorCards: data
+            };
+            // res.render("index2", requestorCardObject)
+        
         db.DonatorCard.findAll({
             // order: db.DonatorCard.literal('enddate DESC')
             order: [['enddate', 'DESC']]
@@ -17,9 +24,16 @@ module.exports = function(app) {
             donatorCard = {
                 result: result
             }
-            console.log(donatorCard.result);
-        res.render("index", donatorCard);
+            resultObj = {
+                result: result,
+                requestorCards: data
+            }
+            // console.log(donatorCard.result);
+            console.log("MERGING RESULT OBJECTS");
+            console.log(resultObj);
+        res.render("index", resultObj);
     })
+});
     })
 
     // Server side javascript to create a new donator card
