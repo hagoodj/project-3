@@ -9,7 +9,10 @@ module.exports = function(app) {
 
     // To retrive all donator cards from database
     app.get("/", function(req, res){
-        db.DonatorCard.findAll({}).then(function(result){
+        db.DonatorCard.findAll({
+            // order: db.DonatorCard.literal('enddate DESC')
+            order: [['enddate', 'DESC']]
+        }).then(function(result){
             console.log(result);
             donatorCard = {
                 result: result

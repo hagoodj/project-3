@@ -43,7 +43,7 @@ $(document).ready(function () {
         }).then(function () {
             console.log("Inserted into table");
         })
-
+        // location.reload();
     }
 
     // On click of add button generates a modal with a form to add new card
@@ -62,9 +62,9 @@ $(document).ready(function () {
 
     // On click of request donation button
     // $("#requestDonation").on("click", function (event) {
-        $(document).on("click", "#requestDonation", function(event){
+    $(document).on("click", "#requestDonation", function (event) {
         event.preventDefault();
-        id=$(this).data("id");
+        id = $(this).data("id");
         console.log(id);
         console.log("Inside request donation button");
         $("#request-donation-modal").modal("toggle");
@@ -102,11 +102,11 @@ $(document).ready(function () {
         $.ajax("/api/donator/update/" + id, {
             type: "PUT",
             data: newAmount
-            }).then(
-            function(){
-            console.log("Updated");
+        }).then(
+            function () {
+                console.log("Updated");
             }
-            )
+        )
     }
 
     // Function to check if number of items in card is zero
@@ -114,10 +114,10 @@ $(document).ready(function () {
         $.ajax("/api/itemsnumber", {
             type: "GET"
         }).then(
-            function(result){
+            function (result) {
                 console.log(result);
-                for(var i=0; i<result.length; i++){
-                    if(result[i].itemnumber === 0 ){
+                for (var i = 0; i < result.length; i++) {
+                    if (result[i].itemnumber === 0) {
                         console.log(result[i].id);
                         deleteItems(result[i].id);
                     }
@@ -130,7 +130,7 @@ $(document).ready(function () {
     function deleteItems(id) {
         $.ajax("/api/delete/" + id, {
             type: "PUT"
-        }).then(function(result){
+        }).then(function (result) {
             console.log(result);
             console.log("Deleted");
         })
