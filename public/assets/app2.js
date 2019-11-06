@@ -67,7 +67,11 @@ $(document).ready(function () {
 
     function createDonation(donationData) {
         $.post("/api/new/donation", donationData)
-            .then(console.log("created new donation"));
+            .then(function(){
+                console.log("created new donation");
+                location.reload();
+            }
+            );
     }
 
     $("#homeButton").on("click", function (event) {
@@ -111,14 +115,10 @@ $(document).ready(function () {
         }
     }
 
-    // $("#viewRequestorCards").on("click", function (event) {
-    //     event.preventDefault();
-    //     window.location = "/usersrequestorcards/" + userid;
-    // });
+    $("#viewCards").on("click", function (event) {
+        event.preventDefault();
+        window.location = "/allusercards/" + userid;
+    });
 
-    // $("#viewDonatorCards").on("click", function (event) {
-    //     event.preventDefault();
-    //     window.location = "/usersdonatorcards/" + userid;
-    // });
 
 })
