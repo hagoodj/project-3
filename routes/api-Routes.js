@@ -94,19 +94,41 @@ module.exports = function (app) {
 
     // ******************************************************************************
 
-    // app.get("/allcards/:userid", function (req, res) {
+    app.put("/api/donation/:requestorcardid/:userid", function (req, res) {
+        console.log("accepted donation")
+        db.Donation.update({
+            accepted: req.body.accepted
+        }, {
+            where: {
+                RequestorCardId: req.params.requestorcardid,
+                UserId: req.params.userid,
+            }
+        }).then(function (dbDonation) {
+            res.json(dbDonation);
+        });
+    });
 
-    //     db.RequestorCard.findAll({
-    //         where: {
-    //             UserId: req.params.userid
-    //         }
-    //     }).then(function (data) {
-    //         var requestorCardObject = {
-    //             requestorCard: data
-    //         };
-    //         res.render("usercards", requestorCardObject, donatorCardObject)
-    //     });
-
-    // });
+    app.put("/api/updaterequestorcard/:requestorcardid", function (req, res) {
+        console.log("AHHHHHHHHHHHHHHHHHHHH")
+        console.log(req.params.requestorcardid)
+        db.RequestorCard.findOne({
+            where: {
+                id: req.params.requestorcardid
+            }
+        }).then(function (result) {
+            console.log("HEEEEYYYYYY")
+            console.log(result.numberneeded)
+            db.RequestorCard.update({
+                numberneeded: result.numberneeded - req.body.amount
+            }, {
+                where: {
+                    id: req.params.requestorcardid
+                }
+            }).then(function (ressy) {
+                console.log("AFTER UPDATE BOI")
+                res.json(ressy);
+            });
+        })
+    })
 
 }
