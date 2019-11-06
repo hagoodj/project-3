@@ -6,6 +6,8 @@ $(document).ready(function () {
     var id;
     var userId = 1;
     var donatorCardId = 1;
+    checkNumberOfItems();
+
     // Grab all values entered by user when submit button is clicked
     $("#submit-btn").on("click", function (event) {
         event.preventDefault();
@@ -18,7 +20,6 @@ $(document).ready(function () {
         var location = $("#input-location").val().trim();
         var image = $("#input-image").val().trim();
 
-        checkNumberOfItems();
         populateDonatorCards(startDate, endDate, category, item, noOfItems, location, image);
     })
 
@@ -56,7 +57,7 @@ $(document).ready(function () {
     $("#modal-close").on("click", function (event) {
         event.preventDefault();
         console.log("Inside close modal button");
-        // location.reload();
+        location.reload();
     })
 
     // On click of request donation button
@@ -117,6 +118,7 @@ $(document).ready(function () {
                 console.log(result);
                 for(var i=0; i<result.length; i++){
                     if(result[i].itemnumber === 0 ){
+                        console.log(result[i].id);
                         deleteItems(result[i].id);
                     }
                 }
@@ -126,7 +128,12 @@ $(document).ready(function () {
 
     // Function to delete items that has zero number of items
     function deleteItems(id) {
-        // Code here
+        $.ajax("/api/delete/" + id, {
+            type: "PUT"
+        }).then(function(result){
+            console.log(result);
+            console.log("Deleted");
+        })
     }
 
 

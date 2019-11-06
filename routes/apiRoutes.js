@@ -87,4 +87,15 @@ module.exports = function(app) {
             })
 
         })
+
+        // To delete when number of items is zero
+        app.put("/api/delete/:id", function(req, res){
+            var id = req.params.id;
+
+            db.DonatorCard.destroy({
+              where: {
+                id: id
+              }
+            })
+        })
 }
