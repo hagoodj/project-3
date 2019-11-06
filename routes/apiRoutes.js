@@ -7,11 +7,15 @@ module.exports = function(app) {
         res.sendFile(path.join(__dirname + "/../public/assets/form.html"));
     })
 
-    // To retrive all donator cards from database
-
-
+    // To retrive all donator and requestor cards from database
     app.get("/:id", function(req, res){
-
+        
+        db.RequestorCard.findAll({}).then(function (data) {
+            var requestorCardObject = {
+                requestorCards: data
+            };
+            // res.render("index2", requestorCardObject)
+        
         db.DonatorCard.findAll({
             // order: db.DonatorCard.literal('enddate DESC')
             order: [['enddate', 'DESC']]
@@ -31,7 +35,6 @@ module.exports = function(app) {
     })
 });
     })
-
     // app.get("/:id", function(req, res){
     //     console.log("/:id route")
     //     console.log(req.params.id)
