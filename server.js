@@ -2,6 +2,9 @@
 var express = require("express");
 var app = express();
 
+// Require validate.js
+var validate = require("validate.js");
+
 var exphbs = require("express-handlebars");
 // require("dotenv").config();
 // process.env.PORT lets the port be set by Heroku

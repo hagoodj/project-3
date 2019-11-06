@@ -1,6 +1,6 @@
 // on click func for logging in
 $(document).ready(function () {
-
+    require(["validate.js"], function(validate) {
     $("#login").on("click", function (event) {
         event.preventDefualt();
         var username = $("#username").val().trim();
@@ -33,3 +33,4 @@ $(document).ready(function () {
     }
 
 })
+});
