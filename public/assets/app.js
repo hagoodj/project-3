@@ -149,7 +149,7 @@ else{
         event.preventDefault();
         var amount = $("#input-amount").val().trim();
         console.log(amount);
-        // populateRequest(amount);
+        populateRequest(amount);
         updateDonatorCards(amount, id);
     })
 
@@ -207,8 +207,39 @@ else{
         }).then(function (result) {
             console.log(result);
             console.log("Deleted");
+            location.reload();
         })
     }
+
+    // Function to delete cards
+    $(".deleteRequestorCard").on("click", function(event){
+        event.preventDefault();
+        var id = $(this).data("id");
+
+        $.ajax("/api/deleteRequestorCard/" + id, {
+            type: "PUT"
+        }).then(function (result) {
+            console.log(result);
+            console.log("Deleted requestor card");
+            location.reload();
+        })
+
+    })
+
+        // Function to delete cards
+        $(".deleteDonatorCard").on("click", function(event){
+            event.preventDefault();
+            var id = $(this).data("id");
+            
+            $.ajax("/api/deleteDonatorCard/" + id, {
+                type: "PUT"
+            }).then(function (result) {
+                console.log(result);
+                console.log("Deleted donator card");
+                location.reload();
+            })
+    
+        })
 
 
 })

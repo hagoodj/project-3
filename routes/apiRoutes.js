@@ -118,6 +118,34 @@ module.exports = function (app) {
             where: {
                 id: id
             }
+        }).then(function(result){
+            res.json(result);
+        })
+    })
+
+    // To delete requestor card
+    app.put("/api/deleteRequestorCard/:id", function (req, res) {
+        var id = req.params.id;
+
+        db.RequestorCard.destroy({
+            where: {
+                id: id
+            }
+        }).then(function(result){
+            res.json(result);
+        })
+    })
+
+    // To delete Donator card
+    app.put("/api/deleteDonatorCard/:id", function (req, res) {
+        var id = req.params.id;
+
+        db.DonatorCard.destroy({
+            where: {
+                id: id
+            }
+        }).then(function(result){
+            res.json(result);
         })
     })
 
@@ -125,13 +153,13 @@ module.exports = function (app) {
     app.get("/allusercards/:id", function (req, res) {
 
         db.RequestorCard.findAll({
-            where:{
+            where: {
                 UserId: req.params.id
             }
         }).then(function (data) {
 
             db.DonatorCard.findAll({
-                where:{
+                where: {
                     UserId: req.params.id
                 }
             }).then(function (result) {

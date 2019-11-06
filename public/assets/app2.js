@@ -67,7 +67,11 @@ $(document).ready(function () {
 
     function createDonation(donationData) {
         $.post("/api/new/donation", donationData)
-            .then(console.log("created new donation"));
+            .then(function(){
+                console.log("created new donation");
+                location.reload();
+            }
+            );
     }
 
     $("#homeButton").on("click", function (event) {
