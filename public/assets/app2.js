@@ -120,5 +120,32 @@ $(document).ready(function () {
         window.location = "/allusercards/" + userid;
     });
 
+    $(".acceptDonation").on("click", updateDonation, updateRequestorCard)
+
+    function updateDonation () {
+        var acceptDonationRequestorCardId = $(this).data("requestorcardid");
+        var acceptDonationUserId = $(this).data("userid");
+        var updateAccepted = {
+            accepted: true
+        };
+        $.ajax({
+            method: "PUT",
+            url: "/api/donation/" + acceptDonationRequestorCardId + "/" + acceptDonationUserId,
+            data: updateAccepted
+        }).then(console.log("updated card: " + acceptDonationRequestorCardId + " with user id: " + acceptDonationUserId));
+    }
+
+    function updateRequestorCard () {
+        var acceptDonationRequestorCardId = $(this).data("requestorcardid");
+        var amount = $(this).data("amount");
+        var updateAcceptedRequestorCard = {
+            amount: amount
+        };
+        $.ajax({
+            method: "PUT",
+            url: "/api/updaterequestorcard/" + acceptDonationRequestorCardId,
+            data: updateAcceptedRequestorCard
+        }).then(console.log("updated card: " + acceptDonationRequestorCardId));
+    }
 
 })
