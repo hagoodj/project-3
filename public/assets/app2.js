@@ -1,8 +1,8 @@
 
 $(document).ready(function () {
 
-    // var userid = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
-    var userid = 1;
+    var userid = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+    // var userid = 1;
 
     $("#addRequestorCard").on("click", function (event) {
         event.preventDefault();
@@ -28,11 +28,11 @@ $(document).ready(function () {
             numberneeded: numberneeded,
             priority: priority,
             image: image,
+            UserId: userid
         });
     }
 
     function createRequestorCard(requestorCardData) {
-        console.log(requestorCardData);
         window.location.reload();
         $.post("/api/new/requestorcard", requestorCardData)
             .then(console.log("created new requestor card"));
@@ -55,7 +55,7 @@ $(document).ready(function () {
         }
     })
 
-    function makeDonation (amount) {
+    function makeDonation(amount) {
         console.log("making donation")
         createDonation({
             RequestorCardId: requestorcardid,
@@ -66,9 +66,59 @@ $(document).ready(function () {
     }
 
     function createDonation(donationData) {
-        console.log(donationData);
         $.post("/api/new/donation", donationData)
             .then(console.log("created new donation"));
     }
+
+    $("#homeButton").on("click", function (event) {
+        event.preventDefault();
+        window.location = "/" + userid;
+    });
+
+    $("#viewRequests").on("click", function (event) {
+        event.preventDefault();
+        window.location = "/requests/" + userid;
+        getDonatorCards();
+    });
+
+    function getDonatorCards() {
+        $.get("/donatorcards/" + userid, function (res) {
+            getRequests(res);
+        })
+    }
+
+    function getRequests(results) {
+        for (i = 0; i < results.length; i++) {
+            $.get("/requests/" + results.DonatorCardId, function () {})
+        }
+    }
+
+    $("#viewDonations").on("click", function (event) {
+        event.preventDefault();
+        window.location = "/donations/" + userid;
+        getRequestorCards();
+    });
+
+    function getRequestorCards() {
+        $.get("/requestorcards/" + userid, function (res) {
+            getDonations(res);
+        })
+    }
+
+    function getDonations(results) {
+        for (i = 0; i < results.length; i++) {
+            $.get("/donations/" + results.RequestorCardId, function () {})
+        }
+    }
+
+    // $("#viewRequestorCards").on("click", function (event) {
+    //     event.preventDefault();
+    //     window.location = "/usersrequestorcards/" + userid;
+    // });
+
+    // $("#viewDonatorCards").on("click", function (event) {
+    //     event.preventDefault();
+    //     window.location = "/usersdonatorcards/" + userid;
+    // });
 
 })

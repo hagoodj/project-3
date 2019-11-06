@@ -34,4 +34,79 @@ module.exports = function (app) {
 
     });
 
+    // *****************************************************************************
+
+    app.get("/donatorcards/:userid", function (req, res) {
+
+        db.DonatorCard.findAll({
+            where: {
+                UserId: req.params.userid
+            }
+        }).then(function (dbDonatorCard) {
+            res.json(dbDonatorCard);
+        });
+
+    });
+
+    app.get("/requests/:cardid", function (req, res) {
+
+        db.Request.findAll({
+            where: {
+                DonatorCardId: req.params.cardid
+            }
+        }).then(function (data) {
+            var requestsObject = {
+                requests: data
+            };
+            res.render("requests", requestsObject)
+        });
+
+    });
+
+    // *****************************************************************************
+
+    app.get("/requestorcards/:userid", function (req, res) {
+
+        db.RequestorCard.findAll({
+            where: {
+                UserId: req.params.userid
+            }
+        }).then(function (dbRequestorCard) {
+            res.json(dbRequestorCard);
+        });
+
+    });
+
+    app.get("/donations/:cardid", function (req, res) {
+
+        db.Donation.findAll({
+            where: {
+                RequestorCardId: req.params.cardid
+            }
+        }).then(function (data) {
+            var donationsObject = {
+                donations: data
+            };
+            res.render("donations", donationsObject)
+        });
+
+    });
+
+    // ******************************************************************************
+
+    // app.get("/allcards/:userid", function (req, res) {
+
+    //     db.RequestorCard.findAll({
+    //         where: {
+    //             UserId: req.params.userid
+    //         }
+    //     }).then(function (data) {
+    //         var requestorCardObject = {
+    //             requestorCard: data
+    //         };
+    //         res.render("usercards", requestorCardObject, donatorCardObject)
+    //     });
+
+    // });
+
 }
