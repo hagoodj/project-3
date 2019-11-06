@@ -36,16 +36,16 @@
       </div>
       <div class="modal-body">
         <!-- Form -->
-        <form data-toggle="validator" role="form">
+        <form data-toggle="validator" role="form"id="myForm">
           <div class="form-group">
             <label for="sdate">Start Date</label>
             <input type="sdate" class="form-control" id="input-sdate" aria-describedby="emailHelp"
-              placeholder="Enter start Date" name="sdate">
+              placeholder="Enter start Date" name="sdate" data-placement="right" title="Start Date is required">
           </div>
           <div class="form-group">
             <label for="edate">End Date</label>
             <input type="edate" class="form-control" id="input-edate" aria-describedby="emailHelp"
-              placeholder="Enter End Date" name="'edate'">
+              placeholder="Enter End Date" name="'edate'" data-placement="right" title="End Date is required">
           </div>
           <div class="form-group">
             <label for="edate">Category</label>
@@ -59,11 +59,11 @@
           <div class="form-group">
             <label for="item">Item</label>
             <input type="item" class="form-control" id="input-item" aria-describedby="emailHelp"
-              placeholder="Item you wish to Donate" name="item">
+              placeholder="Item you wish to Donate" name="item" required>
           </div>
           <label for="noOfItems">Number of Items</label>
           <input type="noOfItems" class="form-control" id="input-noOfItems" aria-describedby="emailHelp"
-            placeholder="Enter number of items you wish to donate" name="noOfItems">
+            placeholder="Enter number of items you wish to donate" name="noOfItems" required>
           <div class="form-group">
             <label for="location">Location</label>
             <input type="text" class="form-control" id="input-location" aria-describedby="emailHelp"

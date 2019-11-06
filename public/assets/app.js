@@ -19,9 +19,81 @@ $(document).ready(function () {
         var noOfItems = $("#input-noOfItems").val().trim();
         var location = $("#input-location").val().trim();
         var image = $("#input-image").val().trim();
-
+        validateForm(startDate,endDate, category, item, noOfItems, location);
         populateDonatorCards(startDate, endDate, category, item, noOfItems, location, image);
     })
+
+    // Function to validate form
+function validateForm(startDate,endDate, category, item, noOfItems, location) {
+ if(startDate === ""){
+    $("#input-sdate").css({
+        "border": "1px solid red"
+    });
+    $("#input-sdate").tooltip();
+ }
+ else{
+    $("#input-sdate").css({
+        "border": "1px solid green"
+    });
+ }
+  if(endDate === ""){
+    $("#input-edate").css({
+        "border": "1px solid red"
+    });
+    $("#input-edate").tooltip();
+ }
+ else{
+    $("#input-edate").css({
+        "border": "1px solid green"
+    });
+ }
+  if(category === "--None--"){
+     $("#dropdown-category").css({
+        "border": "1px solid red"
+    });
+    $("#dropdown-category").tooltip();
+ }
+ else{
+    $("#dropdown-category").css({
+        "border": "1px solid green"
+    });
+ }
+  if(item === ""){
+    $("#input-item").css({
+       "border": "1px solid red"    
+   });
+   $("#input-item").tooltip();
+}
+else{
+    $("#input-item").css({
+        "border": "1px solid green"
+    });
+ }
+ if(noOfItems === ""){
+    $("#input-noOfItems").css({
+       "border": "1px solid red"    
+   });
+   $("#input-noOfItems").tooltip();
+}
+else{
+    $("#input-noOfItems").css({
+        "border": "1px solid green"
+    });
+ }
+ if(location === ""){
+    $("#input-location").css({
+       "border": "1px solid red"    
+   });
+   $("#input-location").tooltip();
+}
+else{
+    $("#input-location").css({
+        "border": "1px solid green"
+    });
+ }
+
+
+}
 
     // Function that populates values to Donator Cards
     function populateDonatorCards(startDate, endDate, category, item, noOfItems, location, image) {
@@ -115,7 +187,7 @@ $(document).ready(function () {
             type: "GET"
         }).then(
             function (result) {
-                console.log(result);
+                // console.log(result);
                 for (var i = 0; i < result.length; i++) {
                     if (result[i].itemnumber === 0) {
                         console.log(result[i].id);
