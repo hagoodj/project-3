@@ -8,6 +8,7 @@ module.exports = function(app) {
     })
 
     // To retrive all donator cards from database
+
     app.get("/", function(req, res){
         db.DonatorCard.findAll({
             // order: db.DonatorCard.literal('enddate DESC')
@@ -21,6 +22,18 @@ module.exports = function(app) {
         res.render("index", donatorCard);
     })
     })
+
+    // app.get("/:id", function(req, res){
+    //     console.log("/:id route")
+    //     console.log(req.params.id)
+    //     db.DonatorCard.findAll({}).then(function(result){
+    //         console.log(result);
+    //         donatorCard = {
+    //             result: result
+    //         }
+    //     res.render("index", donatorCard);
+    // })
+
 
     // Server side javascript to create a new donator card
     app.post("/api/new/donatorcard", function(req, res){
