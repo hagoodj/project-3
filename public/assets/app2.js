@@ -111,14 +111,10 @@ $(document).ready(function () {
         }
     }
 
-    // $("#viewRequestorCards").on("click", function (event) {
-    //     event.preventDefault();
-    //     window.location = "/usersrequestorcards/" + userid;
-    // });
+    $("#viewCards").on("click", function (event) {
+        event.preventDefault();
+        window.location = "/allusercards/" + userid;
+    });
 
-    // $("#viewDonatorCards").on("click", function (event) {
-    //     event.preventDefault();
-    //     window.location = "/usersdonatorcards/" + userid;
-    // });
 
 })

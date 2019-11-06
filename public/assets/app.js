@@ -4,7 +4,8 @@
 // Make sures that the whole document is ready
 $(document).ready(function () {
     var id;
-    var userId = 1;
+    var userId = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+    // var userId = 1;
     var donatorCardId = 1;
     checkNumberOfItems();
 
@@ -105,7 +106,8 @@ else{
             item: item,
             noOfItems: noOfItems,
             location: location,
-            image: image
+            image: image,
+            UserId: userId
         }
 
         // Post a new value to database
