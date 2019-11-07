@@ -6,21 +6,40 @@
     crossorigin="anonymous"></script>
 <script src="../assets/app2.js"></script>
 
-<ul class="nav">
-    <li class="nav-item">
-        <button class="nav-link" id="homeButton">Home</button>
-    </li>
-    <li class="nav-item">
-        <button class="nav-link" id="viewRequests">View Requests</button>
-    </li>
-    <li class="nav-item">
-        <button class="nav-link" id="viewDonations">View Donations</button>
-    </li>
-    <li class="nav-item">
-        <button class="nav-link" id="viewCards">Your Cards</button>
-    </li>
-</ul>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="/assets/css/style.css">
 
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <div id="logo">
+            <img src="../assets/img/blkDsLogo.png" width="200" height="200" alt="">
+        </div>
+    </a>
+    <div id="navbar">
+        <li class="nav-brand">
+            <button class="nav-link" id="homeButton">Home</button>
+        </li>
+        <li class="nav-brand">
+            <button class="nav-link" id="viewRequests">View Requests</button>
+        </li>
+        <li class="nav-brand">
+            <button class="nav-link" id="viewDonations">View Donations</button>
+        </li>
+        <li class="nav-brand">
+            <button class="nav-link" id="viewCards">Your Cards</button>
+        </li>
+        <li class="navbar-brand">
+            <button class="nav-link" id="logoutButton">Log out</button>
+        </li>
+    </div>
+</nav>
+
+<div id="littlediv">
+    <img src="../assets/img/background.png" class="card-img" alt="...">
+    <!-- <div class="card-img-overlay">
+            </div> -->
+</div>
 <h2>View all requests for your donations below!</h2>
 
 {{#each requests}}
@@ -29,8 +48,8 @@
         {{!-- <img class="card-img-top" src="{{image}}" alt="Card image cap"> --}}
         <div class="card-body">
             <h5 class="card-title">A user has requested {{amount}} of the item you have offered to donate.</h5>
-            <button class = "acceptRequest" data-requestid = "{{id}}" data-value = "true">Accept Request</button>
-            <button class = "denyRequest" data-requestid = "{{id}}" data-value = "false">Deny Request</button>
+            <button class="acceptRequest" data-requestid="{{id}}" data-value="true">Accept Request</button>
+            <button class="denyRequest" data-requestid="{{id}}" data-value="false">Deny Request</button>
         </div>
     </div>
 </div>

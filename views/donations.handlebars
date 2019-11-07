@@ -5,23 +5,42 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
 <script src="../assets/app2.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="/assets/css/style.css">
 
-<ul class="nav">
-    <li class="nav-item">
-        <button class="nav-link" id="homeButton">Home</button>
-    </li>
-    <li class="nav-item">
-        <button class="nav-link" id="viewRequests">View Requests</button>
-    </li>
-    <li class="nav-item">
-        <button class="nav-link" id="viewDonations">View Donations</button>
-    </li>
-    <li class="nav-item">
-        <button class="nav-link" id="viewCards">Your Cards</button>
-    </li>
-</ul>
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <div id="logo">
+            <img src="../assets/img/blkDsLogo.png" width="200" height="200" alt="">
+        </div>
+    </a>
+    <div id="navbar">
+        <li class="navbar-brand">
+            <button class="nav-link" id="homeButton">Home</button>
+        </li>
+        <li class="navbar-brand">
+            <button class="nav-link" id="viewRequests">View requests</button>
+        </li>
+        <li class="navbar-brand">
+            <button class="nav-link" id="viewDonations">View donations</button>
+        </li>
+        <li class="navbar-brand">
+            <button class="nav-link" id="viewCards">Your cards</button>
+        </li>
+        <li class="navbar-brand">
+            <button class="nav-link" id="logoutButton">Log out</button>
+        </li>
+    </div>
+</nav>
 
-<h2>View all donations for your requests below!</h2>
+<div id="littlediv">
+    <img src="../assets/img/background.png" class="card-img" alt="...">
+    <!-- <div class="card-img-overlay">
+            </div> -->
+</div>
+
+{{!-- <h2>View all donations for your requests below!</h2> --}}
 
 {{#each donations}}
 <div class="d-inline-flex flex-row p-3">
@@ -29,8 +48,8 @@
         {{!-- <img class="card-img-top" src="{{image}}" alt="Card image cap"> --}}
         <div class="card-body">
             <h5 class="card-title">A user has offered to donate {{amount}} of the item you have requested.</h5>
-            <button class = "acceptDonation" data-donationid = "{{id}}" data-value = "true">Accept Offer</button>
-            <button class = "denyDonation" data-donationid = "{{id}}" data-value = "false">Deny Offer</button>
+            <button class="acceptDonation" data-donationid="{{id}}" data-value="true">Accept Offer</button>
+            <button class="denyDonation" data-donationid="{{id}}" data-value="false">Deny Offer</button>
         </div>
     </div>
 </div>
