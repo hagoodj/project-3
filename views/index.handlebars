@@ -67,15 +67,16 @@
           <div class="form-group">
             <label for="item">Item</label>
             <input type="item" class="form-control" id="requestorCardItem" aria-describedby="emailHelp"
-              placeholder="Item you wish to request">
+              placeholder="Item you wish to request" data-placement="right" title="Item is required">
           </div>
           <label for="noOfItemsNeeded">Number of Items Needed</label>
           <input type="noOfItemsNeeded" class="form-control" id="requestorCardNumberNeeded" aria-describedby="emailHelp"
-            placeholder="Enter number of items you are requesting">
+            placeholder="Enter number of items you are requesting" data-placement="right"
+            title="#Needed is required! Should be a number">
           <div class="form-group">
             <label for="location">Location</label>
             <input type="location" class="form-control" id="requestorCardLocation" aria-describedby="emailHelp"
-              placeholder="Your location">
+              placeholder="Your location"data-placement="right"title="Location is required">
           </div>
           <div class="form-group">
             <label for="location">Priority</label>
@@ -93,7 +94,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" id="addRequestorCard" data-dismiss="modal">Submit</button>
+        <button type="submit" class="btn btn-primary" id="addRequestorCard">Submit</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modal-close">Close</button>
       </div>
     </div>
 
@@ -172,7 +174,8 @@
           <div class="form-group">
             <label for="edate">End Date</label>
             <input type="edate" class="form-control" id="input-edate" aria-describedby="emailHelp"
-              placeholder="Enter End Date" name="'edate'" data-placement="right" title="End Date is required! Format mm/dd/yyyy">
+              placeholder="Enter End Date" name="'edate'" data-placement="right"
+              title="End Date is required! Format mm/dd/yyyy">
           </div>
           <div class="form-group">
             <label for="edate">Category</label>
@@ -190,15 +193,16 @@
           <div class="form-group">
             <label for="item">Item</label>
             <input type="item" class="form-control" id="input-item" aria-describedby="emailHelp"
-              placeholder="Item you wish to Donate" name="item" required>
+              placeholder="Item you wish to Donate" name="item" data-placement="right" title="Item is required">
           </div>
           <label for="noOfItems">Number of Items</label>
           <input type="noOfItems" class="form-control" id="input-noOfItems" aria-describedby="emailHelp"
-            placeholder="Enter number of items you wish to donate" name="noOfItems" required>
+            placeholder="Enter number of items you wish to donate" name="noOfItems" data-placement="right"
+            title="#Items is required! Should be a number">
           <div class="form-group">
             <label for="location">Location</label>
             <input type="text" class="form-control" id="input-location" aria-describedby="emailHelp"
-              placeholder="Your location" name="location" required>
+              placeholder="Your location" name="location" data-placement="right" title="Location is required">
           </div>
           <div class="form-group">
             <label for="image">Image</label>

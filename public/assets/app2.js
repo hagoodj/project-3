@@ -12,12 +12,80 @@ $(document).ready(function () {
         var numberneeded = $("#requestorCardNumberNeeded").val().trim();
         var priority = Boolean($("#requestorCardPriority").val());
         var image = $("#requestorCardImage").val().trim();
-        if (!category || !item || !location || !numberneeded || !priority) {
-            return;
-        } else {
+        // if (!category || !item || !location || !numberneeded || !priority) {
+        //     return;
+        // } else {
+            validateForm(category, item, location, numberneeded, priority);
             addRequestorCard(category, item, location, numberneeded, priority, image);
-        }
+        // }
     });
+
+    // Validation Function
+    function validateForm(category, item, location, numberneeded, priority) {
+        if (category === "--None--") {
+            $("#requestorCardCategory").css({
+                "border": "2px solid red"
+            });
+            $("#requestorCardCategory").tooltip();
+        }
+        else {
+            $("#requestorCardCategory").css({
+                "border": "2px solid green"
+            });
+        }
+        if (item === "") {
+            $("#requestorCardItem").css({
+                "border": "2px solid red"
+            });
+            $("#requestorCardItem").tooltip();
+        }
+        else {
+            $("#requestorCardItem").css({
+                "border": "2px solid green"
+            });
+        }
+        if (location === "") {
+            $("#requestorCardLocation").css({
+                "border": "2px solid red"
+            });
+            $("#requestorCardLocation").tooltip();
+        }
+        else {
+            $("#requestorCardLocation").css({
+                "border": "2px solid green"
+            });
+        }
+        if (numberneeded === "") {
+            $("#requestorCardNumberNeeded").css({
+                "border": "2px solid red"
+            });
+            $("#requestorCardNumberNeeded").tooltip();
+        }
+        else {
+            if (typeof (numberneeded) == "number") {
+                $("#requestorCardNumberNeeded").css({
+                    "border": "2px solid green"
+                });
+            }
+            else {
+                $("#requestorCardNumberNeeded").css({
+                    "border": "2px solid black"
+                });
+                $("#requestorCardNumberNeeded").tooltip();
+            }
+        }
+        if (priority === "") {
+            $("#requestorCardPriority").css({
+                "border": "2px solid red"
+            });
+            $("#requestorCardPriority").tooltip();
+        }
+        else {
+            $("#requestorCardPriority").css({
+                "border": "2px solid green"
+            });
+        }
+    }
 
     function addRequestorCard(category, item, location, numberneeded, priority, image) {
         console.log("adding RequestorCard")
@@ -33,7 +101,7 @@ $(document).ready(function () {
     }
 
     function createRequestorCard(requestorCardData) {
-        window.location.reload();
+        // window.location.reload();
         $.post("/api/new/requestorcard", requestorCardData)
             .then(console.log("created new requestor card"));
     }
@@ -67,7 +135,7 @@ $(document).ready(function () {
 
     function createDonation(donationData) {
         $.post("/api/new/donation", donationData)
-            .then(function(){
+            .then(function () {
                 console.log("created new donation");
                 location.reload();
             }
@@ -93,7 +161,7 @@ $(document).ready(function () {
 
     function getRequests(results) {
         for (i = 0; i < results.length; i++) {
-            $.get("/requests/" + results.DonatorCardId, function () {})
+            $.get("/requests/" + results.DonatorCardId, function () { })
         }
     }
 
@@ -111,7 +179,7 @@ $(document).ready(function () {
 
     function getDonations(results) {
         for (i = 0; i < results.length; i++) {
-            $.get("/donations/" + results.RequestorCardId, function () {})
+            $.get("/donations/" + results.RequestorCardId, function () { })
         }
     }
 
