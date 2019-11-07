@@ -109,15 +109,13 @@ module.exports = function (app) {
     });
 
     app.put("/api/updaterequestorcard/:requestorcardid", function (req, res) {
-        console.log("AHHHHHHHHHHHHHHHHHHHH")
+        console.log("UPDATE REQUESTOR CARD")
         console.log(req.params.requestorcardid)
         db.RequestorCard.findOne({
             where: {
                 id: req.params.requestorcardid
             }
         }).then(function (result) {
-            console.log("HEEEEYYYYYY")
-            console.log(result.numberneeded)
             db.RequestorCard.update({
                 numberneeded: result.numberneeded - req.body.amount
             }, {
@@ -125,10 +123,72 @@ module.exports = function (app) {
                     id: req.params.requestorcardid
                 }
             }).then(function (ressy) {
+                res.json(ressy);
+            });
+        })
+    })
+
+    // ******************************************************************************
+
+    app.put("/api/request/:donatorcardid/:userid", function (req, res) {
+        console.log("accepted request")
+        db.Request.update({
+            accepted: req.body.accepted
+        }, {
+            where: {
+                DonatorCardId: req.params.donatorcardid,
+                UserId: req.params.userid,
+            }
+        }).then(function (dbRequest) {
+            res.json(dbRequest);
+        });
+    });
+
+    app.put("/api/updatedonatorcard/:donatorcardid", function (req, res) {
+        console.log("UPDATE DONATOR CARD")
+        console.log(req.params.donatorcardid)
+        db.DonatorCard.findOne({
+            where: {
+                id: req.params.donatorcardid
+            }
+        }).then(function (result) {
+            console.log("HEEEEYYYYYY")
+            console.log(result.itemnumber)
+            db.DonatorCard.update({
+                itemnumber: result.itemnumber - req.body.amount
+            }, {
+                where: {
+                    id: req.params.donatorcardid
+                }
+            }).then(function (ressy) {
                 console.log("AFTER UPDATE BOI")
                 res.json(ressy);
             });
         })
     })
+
+    // ******************************************************************************
+
+    app.delete("/api/delete/donation/:cardid/:userid", function (req, res) {
+        db.Donation.destroy({
+          where: {
+            RequestorCardId: req.params.cardid,
+            UserId: req.params.userid
+          }
+        }).then(function (result) {
+          res.json(result);
+        });
+      });
+
+      app.delete("/api/delete/request/:cardid/:userid", function (req, res) {
+        db.Request.destroy({
+          where: {
+            DonatorCardId: req.params.cardid,
+            UserId: req.params.userid
+          }
+        }).then(function (result) {
+          res.json(result);
+        });
+      });
 
 }

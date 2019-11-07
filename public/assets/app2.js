@@ -67,7 +67,7 @@ $(document).ready(function () {
 
     function createDonation(donationData) {
         $.post("/api/new/donation", donationData)
-            .then(function(){
+            .then(function () {
                 console.log("created new donation");
                 location.reload();
             }
@@ -93,7 +93,7 @@ $(document).ready(function () {
 
     function getRequests(results) {
         for (i = 0; i < results.length; i++) {
-            $.get("/requests/" + results.DonatorCardId, function () {})
+            $.get("/requests/" + results.DonatorCardId, function () { })
         }
     }
 
@@ -111,7 +111,7 @@ $(document).ready(function () {
 
     function getDonations(results) {
         for (i = 0; i < results.length; i++) {
-            $.get("/donations/" + results.RequestorCardId, function () {})
+            $.get("/donations/" + results.RequestorCardId, function () { })
         }
     }
 
@@ -120,9 +120,11 @@ $(document).ready(function () {
         window.location = "/allusercards/" + userid;
     });
 
+    // **************************************************************************************************************************
+
     $(".acceptDonation").on("click", updateDonation, updateRequestorCard)
 
-    function updateDonation () {
+    function updateDonation() {
         var acceptDonationRequestorCardId = $(this).data("requestorcardid");
         var acceptDonationUserId = $(this).data("userid");
         var updateAccepted = {
@@ -135,7 +137,7 @@ $(document).ready(function () {
         }).then(console.log("updated card: " + acceptDonationRequestorCardId + " with user id: " + acceptDonationUserId));
     }
 
-    function updateRequestorCard () {
+    function updateRequestorCard() {
         var acceptDonationRequestorCardId = $(this).data("requestorcardid");
         var amount = $(this).data("amount");
         var updateAcceptedRequestorCard = {
@@ -146,6 +148,66 @@ $(document).ready(function () {
             url: "/api/updaterequestorcard/" + acceptDonationRequestorCardId,
             data: updateAcceptedRequestorCard
         }).then(console.log("updated card: " + acceptDonationRequestorCardId));
+    }
+
+    // **************************************************************************************************************************
+
+    $(".acceptRequest").on("click", updateRequest, updateDonatorCard)
+
+    function updateRequest() {
+        var acceptRequestDonatorCardId = $(this).data("donatorcardid");
+        var acceptRequestUserId = $(this).data("userid");
+        var updateAccepted = {
+            accepted: true
+        };
+        $.ajax({
+            method: "PUT",
+            url: "/api/request/" + acceptRequestDonatorCardId + "/" + acceptRequestUserId,
+            data: updateAccepted
+        }).then(console.log("updated card: " + acceptRequestDonatorCardId + " with user id: " + acceptRequestUserId));
+    }
+
+    function updateDonatorCard() {
+        var acceptRequestDonatorCardId = $(this).data("donatorcardid");
+        var amount = $(this).data("amount");
+        var updateAcceptedDonatorCard = {
+            amount: amount
+        };
+        $.ajax({
+            method: "PUT",
+            url: "/api/updatedonatorcard/" + acceptRequestDonatorCardId,
+            data: updateAcceptedDonatorCard
+        }).then(console.log("updated card: " + acceptRequestDonatorCardId));
+    }
+
+    // **************************************************************************************************************************
+
+    $(".denyDonation").on("click", deleteDonation)
+
+    function deleteDonation() {
+        var denyDonationRequestorCardId = $(this).data("requestorcardid");
+        var denyDonationUserId = $(this).data("userid");
+        $.ajax({
+            method: "DELETE",
+            url: "/api/delete/donation/" + denyDonationRequestorCardId + "/" + denyDonationUserId 
+        }).then(function () {
+            console.log("deleted donation")
+            location.reload();
+        });
+    }
+
+    $(".denyRequest").on("click", deleteRequest)
+
+    function deleteRequest() {
+        var denyRequestDonatorCardId = $(this).data("donatorcardid");
+        var denyRequestUserId = $(this).data("userid");
+        $.ajax({
+            method: "DELETE",
+            url: "/api/delete/request/" + denyRequestDonatorCardId  + "/" + denyRequestUserId
+        }).then(function () {
+            console.log("deleted request")
+            location.reload();
+        });
     }
 
 })

@@ -150,7 +150,7 @@ else{
         var amount = $("#input-amount").val().trim();
         console.log(amount);
         populateRequest(amount);
-        updateDonatorCards(amount, id);
+        // updateDonatorCards(amount, id);
     })
 
     function populateRequest(amount) {
