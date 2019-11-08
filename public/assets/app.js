@@ -167,6 +167,15 @@ $(document).ready(function () {
         }).then(function () {
             console.log("Inserted into table");
         })
+
+        // Insert into MongoDB
+        $.ajax("/api/mongodb/donatorcard", {
+            type: "POST",
+            data: donation
+        }).then(function () {
+            console.log("Inserted into mongod table");
+        })
+
         // location.reload();
     }
 
