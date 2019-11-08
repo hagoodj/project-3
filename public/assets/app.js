@@ -6,7 +6,7 @@ $(document).ready(function () {
     var id;
     var userId = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
     // var userId = 1;
-    var donatorCardId = 1;
+    var donatorCardId;
     checkNumberOfItems();
 
     // Grab all values entered by user when submit button is clicked
@@ -20,81 +20,131 @@ $(document).ready(function () {
         var noOfItems = $("#input-noOfItems").val().trim();
         var location = $("#input-location").val().trim();
         var image = $("#input-image").val().trim();
-        validateForm(startDate,endDate, category, item, noOfItems, location);
+        validateForm(startDate, endDate, category, item, noOfItems, location);
         populateDonatorCards(startDate, endDate, category, item, noOfItems, location, image);
     })
 
     // Function to validate form
-function validateForm(startDate,endDate, category, item, noOfItems, location) {
- if(startDate === ""){
-    $("#input-sdate").css({
-        "border": "1px solid red"
-    });
-    $("#input-sdate").tooltip();
- }
- else{
-    $("#input-sdate").css({
-        "border": "1px solid green"
-    });
- }
-  if(endDate === ""){
-    $("#input-edate").css({
-        "border": "1px solid red"
-    });
-    $("#input-edate").tooltip();
- }
- else{
-    $("#input-edate").css({
-        "border": "1px solid green"
-    });
- }
-  if(category === "--None--"){
-     $("#dropdown-category").css({
-        "border": "1px solid red"
-    });
-    $("#dropdown-category").tooltip();
- }
- else{
-    $("#dropdown-category").css({
-        "border": "1px solid green"
-    });
- }
-  if(item === ""){
-    $("#input-item").css({
-       "border": "1px solid red"    
-   });
-   $("#input-item").tooltip();
-}
-else{
-    $("#input-item").css({
-        "border": "1px solid green"
-    });
- }
- if(noOfItems === ""){
-    $("#input-noOfItems").css({
-       "border": "1px solid red"    
-   });
-   $("#input-noOfItems").tooltip();
-}
-else{
-    $("#input-noOfItems").css({
-        "border": "1px solid green"
-    });
- }
- if(location === ""){
-    $("#input-location").css({
-       "border": "1px solid red"    
-   });
-   $("#input-location").tooltip();
-}
-else{
-    $("#input-location").css({
-        "border": "1px solid green"
-    });
- }
+    function validateForm(startDate, endDate, category, item, noOfItems, location) {
+        if (startDate === "") {
+            $("#input-sdate").css({
+                "border": "2px solid red"
+            });
+            $("#input-sdate").tooltip();
+        }
+        else {
+            var isDate = validateDate(startDate);
+            if (isDate) {
+                $("#input-sdate").css({
+                    "border": "2px solid green"
+                });
+            }
+            else {
+                $("#input-sdate").css({
+                    "border": "2px solid black"
+                });
+                $("#input-sdate").tooltip();
+            }
+        }
+        if (endDate === "") {
+            $("#input-edate").css({
+                "border": "2px solid red"
+            });
+            $("#input-edate").tooltip();
+        }
+        else {
+            var isDate = validateDate(endDate);
+            if (isDate) {
+                $("#input-edate").css({
+                    "border": "2px solid green"
+                });
+            }
+            else {
+                $("#input-edate").css({
+                    "border": "2px solid black"
+                });
+                $("#input-edate").tooltip();
+            }
+        }
+        if (category === "--None--") {
+            $("#dropdown-category").css({
+                "border": "2px solid red"
+            });
+            $("#dropdown-category").tooltip();
+        }
+        else {
+            $("#dropdown-category").css({
+                "border": "2px solid green"
+            });
+        }
+        if (item === "") {
+            $("#input-item").css({
+                "border": "2px solid red"
+            });
+            $("#input-item").tooltip();
+        }
+        else {
+            $("#input-item").css({
+                "border": "2px solid green"
+            });
+        }
+        if (noOfItems === "") {
+            $("#input-noOfItems").css({
+                "border": "2px solid red"
+            });
+            $("#input-noOfItems").tooltip();
+        }
+        else {
+            if (typeof (noOfItems) == "number") {
+                $("#input-noOfItems").css({
+                    "border": "2px solid green"
+                });
+            }
+            else {
+                $("#input-noOfItems").css({
+                    "border": "2px solid black"
+                });
+                $("#input-noOfItems").tooltip();
+            }
+        }
+        if (location === "") {
+            $("#input-location").css({
+                "border": "2px solid red"
+            });
+            $("#input-location").tooltip();
+        }
+        else {
+            $("#input-location").css({
+                "border": "2px solid green"
+            });
+        }
+    }
 
+    // Function to validate Date
+    function validateDate(dateString) {
+        // First check for the pattern
+        if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString))
+            return false;
 
-}
+        // Parse the date parts to integers
+        var parts = dateString.split("/");
+        var day = parseInt(parts[1], 10);
+        var month = parseInt(parts[0], 10);
+        var year = parseInt(parts[2], 10);
+
+        // Check the ranges of month and year
+        if (year < 1000 || year > 3000 || month == 0 || month > 12)
+            return false;
+
+        var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+        // Adjust for leap years
+        if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+            monthLength[1] = 29;
+
+        // Check the range of the day
+        return day > 0 && day <= monthLength[month - 1];
+    };
 
     // Function that populates values to Donator Cards
     function populateDonatorCards(startDate, endDate, category, item, noOfItems, location, image) {
@@ -117,6 +167,15 @@ else{
         }).then(function () {
             console.log("Inserted into table");
         })
+
+        // Insert into MongoDB
+        $.ajax("/api/mongodb/donatorcard", {
+            type: "POST",
+            data: donation
+        }).then(function () {
+            console.log("Inserted into mongod table");
+        })
+
         // location.reload();
     }
 
@@ -139,6 +198,7 @@ else{
     $(document).on("click", "#requestDonation", function (event) {
         event.preventDefault();
         id = $(this).data("id");
+        donatorCardId = id;
         console.log(id);
         console.log("Inside request donation button");
         $("#request-donation-modal").modal("toggle");
@@ -212,7 +272,7 @@ else{
     }
 
     // Function to delete cards
-    $(".deleteRequestorCard").on("click", function(event){
+    $(".deleteRequestorCard").on("click", function (event) {
         event.preventDefault();
         var id = $(this).data("id");
 
@@ -226,20 +286,20 @@ else{
 
     })
 
-        // Function to delete cards
-        $(".deleteDonatorCard").on("click", function(event){
-            event.preventDefault();
-            var id = $(this).data("id");
-            
-            $.ajax("/api/deleteDonatorCard/" + id, {
-                type: "PUT"
-            }).then(function (result) {
-                console.log(result);
-                console.log("Deleted donator card");
-                location.reload();
-            })
-    
+    // Function to delete cards
+    $(".deleteDonatorCard").on("click", function (event) {
+        event.preventDefault();
+        var id = $(this).data("id");
+
+        $.ajax("/api/deleteDonatorCard/" + id, {
+            type: "PUT"
+        }).then(function (result) {
+            console.log(result);
+            console.log("Deleted donator card");
+            location.reload();
         })
+
+    })
 
 
 })

@@ -1,7 +1,7 @@
 // Require express
 var express = require("express");
 var app = express();
-
+const mongoose = require("mongoose");
 var exphbs = require("express-handlebars");
 // require("dotenv").config();
 // process.env.PORT lets the port be set by Heroku
@@ -25,6 +25,7 @@ require("./authentication/routes/html-routes.js")(app);
 
 // Requiring our models for syncing
 var db = require("./models");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/userdb");
 
 // Syncing our sequelize models and then starting our Express app
 db.sequelize.sync().then(function() {
