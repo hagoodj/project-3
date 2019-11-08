@@ -253,7 +253,7 @@ $(document).ready(function () {
                 for (var i = 0; i < result.length; i++) {
                     if (result[i].itemnumber === 0) {
                         console.log(result[i].id);
-                        deleteItems(result[i].id);
+                        deleteDonatorCard(result[i].id);
                     }
                 }
             }
@@ -261,8 +261,8 @@ $(document).ready(function () {
     }
 
     // Function to delete items that has zero number of items
-    function deleteItems(id) {
-        $.ajax("/api/delete/" + id, {
+    function deleteDonatorCard(id) {
+        $.ajax("/api/delete/donatorcard" + id, {
             type: "PUT"
         }).then(function (result) {
             console.log(result);

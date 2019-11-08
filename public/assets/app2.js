@@ -3,14 +3,15 @@ $(document).ready(function () {
 
     var userid = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
     // var userid = 1;
+    checkNumberOfItems();
 
-    $("#viewNotifications").on("click", function(event) {
+    $("#viewNotifications").on("click", function (event) {
         event.preventDefault();
         showAcceptedRequests();
     })
 
     function showAcceptedRequests() {
-        $.get("/api/acceptedrequests/" + userid, function(data) {
+        $.get("/api/acceptedrequests/" + userid, function (data) {
             console.log("Data from getting accepted request: ")
             console.log(data);
         }).then(function () {
@@ -19,12 +20,41 @@ $(document).ready(function () {
     }
 
     function showAcceptedDonations() {
-        $.get("/api/accepteddonations/" + userid, function(data) {
+        $.get("/api/accepteddonations/" + userid, function (data) {
             console.log("Data from getting accepted donation: ")
             console.log(data);
             for (var i = 0; i < data.length; i++) {
                 $.notify("Your donation of " + data[i].amount + data[i].item + "s has been accepted.\nPlease contact " + data[i].requestoremail + " to coordinate exchange.\nOnce you close this notificaiton, you will no longer be able to see this email address.");
             }
+        })
+    }
+
+    // Function to check if number of items in card is zero
+    function checkNumberOfItems() {
+        console.log("Inside numberof items needed");
+        $.ajax("/api/numberneeded", {
+            type: "GET"
+        }).then(
+            function (result) {
+                console.log(result);
+                for (var i = 0; i < result.length; i++) {
+                    if (result[i].numberneeded === 0) {
+                        console.log(result[i].id);
+                        deleteRequestorCard(result[i].id);
+                    }
+                }
+            }
+        )
+    }
+
+    // Function to delete requestor cards that has number needed value zero
+    function deleteRequestorCard(id) {
+        $.ajax("/api/delete/requestorcard/" + id, {
+            type: "PUT"
+        }).then(function (result) {
+            console.log(result);
+            console.log("Deleted requestor Card");
+            location.reload();
         })
     }
 
@@ -40,8 +70,8 @@ $(document).ready(function () {
         // if (!category || !item || !location || !numberneeded || !priority) {
         //     return;
         // } else {
-            validateForm(category, item, location, numberneeded, priority);
-            getUserEmail(category, item, location, numberneeded, priority, image);
+        validateForm(category, item, location, numberneeded, priority);
+        getUserEmail(category, item, location, numberneeded, priority, image);
         // }
     });
 
@@ -114,13 +144,13 @@ $(document).ready(function () {
 
     function getUserEmail(category, item, location, numberneeded, priority, image) {
 
-            $.get("/api/" + userid, function() {
-            }).then(function(result) {
-                console.log("result.email: " + result.email)
-                var useremail = result.email
-                addRequestorCard(category, item, location, numberneeded, priority, image, useremail);
-            })
-        
+        $.get("/api/" + userid, function () {
+        }).then(function (result) {
+            console.log("result.email: " + result.email)
+            var useremail = result.email
+            addRequestorCard(category, item, location, numberneeded, priority, image, useremail);
+        })
+
     }
 
     function addRequestorCard(category, item, location, numberneeded, priority, image, useremail) {
@@ -208,9 +238,9 @@ $(document).ready(function () {
 
     function getRequests(cardid) {
         // for (i = 0; i < results.length; i++) {
-            $.get("/requests/" + cardid, function () {
-                console.log("all requests for donator card with id: " + cardid)
-            })
+        $.get("/requests/" + cardid, function () {
+            console.log("all requests for donator card with id: " + cardid)
+        })
         // }
     }
 
@@ -232,9 +262,9 @@ $(document).ready(function () {
 
     function getDonations(cardid) {
         // for (i = 0; i < results.length; i++) {
-            $.get("/donations/" + cardid, function () {
-                console.log("all donations for requestor card with id: " + cardid)
-            })
+        $.get("/donations/" + cardid, function () {
+            console.log("all donations for requestor card with id: " + cardid)
+        })
         // }
     }
 
@@ -308,7 +338,7 @@ $(document).ready(function () {
 
     $(".denyDonation").on("click", denyDonation)
 
-    function denyDonation () {
+    function denyDonation() {
         var denyDonationRequestorCardId = $(this).data("requestorcardid");
         var denyDonationUserId = $(this).data("userid");
         var updateDenied = {
@@ -335,7 +365,7 @@ $(document).ready(function () {
 
     $(".denyRequest").on("click", denyRequest)
 
-    function denyRequest () {
+    function denyRequest() {
         var denyRequestDonatorCardId = $(this).data("donatorcardid");
         var denyRequestUserId = $(this).data("userid");
         var updateDenied = {

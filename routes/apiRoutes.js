@@ -114,23 +114,45 @@ module.exports = function (app) {
 
     })
 
-    // To check number of items for a particular id
+    // Get all so that item number column is checked
     app.get("/api/itemsnumber", function (req, res) {
         db.DonatorCard.findAll({
         }).then(function (result) {
-            console.log("FIND ALL QUERY RESULT");
-            console.log(result);
-            console.log(result.itemnumber);
             res.send(result);
         })
 
     })
 
-    // To delete when number of items is zero
-    app.put("/api/delete/:id", function (req, res) {
+    // Get all so that number needed column is checked
+    app.get("/api/numberneeded", function (req, res) {
+        db.RequestorCard.findAll({
+        }).then(function (result) {
+            console.log("FIND ALL QUERY RESULT");
+            console.log(result);
+            console.log(result.numberneeded);
+            res.send(result);
+        })
+
+    })
+
+    // To delete when number of items is zero from donator card
+    app.put("/api/delete/donatorcard/:id", function (req, res) {
         var id = req.params.id;
 
         db.DonatorCard.destroy({
+            where: {
+                id: id
+            }
+        }).then(function (result) {
+            res.json(result);
+        })
+    })
+
+    // To delete when number of items is zero from requestor card
+    app.put("/api/delete/requestorcard/:id", function (req, res) {
+        var id = req.params.id;
+
+        db.RequestorCard.destroy({
             where: {
                 id: id
             }

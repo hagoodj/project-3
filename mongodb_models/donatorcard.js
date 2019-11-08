@@ -2,13 +2,14 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const donatorCardSchema = new Schema({
-    startdate: { type: String },
-    enddate: { type: String },
+    startDate: { type: String },
+    endDate: { type: String },
     category: { type: String },
     item: { type: String },
     location: { type: String },
-    itemnumber: { type: Number },
-    image: { type: String }
+    noOfItems: { type: Number },
+    image: { type: String },
+    UserId: {type: Number }
     });
 
     const DonatorCard = mongoose.model("DonatorCard", donatorCardSchema);
