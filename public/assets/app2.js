@@ -4,6 +4,30 @@ $(document).ready(function () {
     var userid = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
     // var userid = 1;
 
+    $("#viewNotifications").on("click", function(event) {
+        event.preventDefault();
+        showAcceptedRequests();
+    })
+
+    function showAcceptedRequests() {
+        $.get("/api/acceptedrequests/" + userid, function(data) {
+            console.log("Data from getting accepted request: ")
+            console.log(data);
+        }).then(function () {
+            showAcceptedDonations();
+        })
+    }
+
+    function showAcceptedDonations() {
+        $.get("/api/accepteddonations/" + userid, function(data) {
+            console.log("Data from getting accepted donation: ")
+            console.log(data);
+            for (var i = 0; i < data.length; i++) {
+                $.notify("Your donation of " + data[i].amount + data[i].item + "s has been accepted.\nPlease contact " + data[i].requestoremail + " to coordinate exchange.\nOnce you close this notificaiton, you will no longer be able to see this email address.");
+            }
+        })
+    }
+
     $("#addRequestorCard").on("click", function (event) {
         event.preventDefault();
         var category = $("#requestorCardCategory").val().trim();
@@ -15,11 +39,17 @@ $(document).ready(function () {
         if (!category || !item || !location || !numberneeded || !priority) {
             return;
         } else {
-            addRequestorCard(category, item, location, numberneeded, priority, image);
+            console.log("inside else in add requestor card function")
+            $.get("/api/" + userid, function() {
+            }).then(function(result) {
+                console.log("result.email: " + result.email)
+                var useremail = result.email
+                addRequestorCard(category, item, location, numberneeded, priority, image, useremail);
+            })
         }
     });
 
-    function addRequestorCard(category, item, location, numberneeded, priority, image) {
+    function addRequestorCard(category, item, location, numberneeded, priority, image, useremail) {
         console.log("adding RequestorCard")
         createRequestorCard({
             category: category,
@@ -28,7 +58,8 @@ $(document).ready(function () {
             numberneeded: numberneeded,
             priority: priority,
             image: image,
-            UserId: userid
+            UserId: userid,
+            useremail: useremail
         });
     }
 
@@ -39,10 +70,14 @@ $(document).ready(function () {
     }
 
     var requestorcardid;
+    var item;
+    var useremail;
 
     $(".donate").on("click", function (event) {
         event.preventDefault();
         requestorcardid = $(this).data("id");
+        item = $(this).data("item");
+        useremail = $(this).data("useremail");
     });
 
     $("#offerDonation").on("click", function (event) {
@@ -61,13 +96,14 @@ $(document).ready(function () {
             RequestorCardId: requestorcardid,
             UserId: userid,
             amount: amount,
-            accepted: false
+            item: item,
+            requestoremail: useremail
         });
     }
 
     function createDonation(donationData) {
         $.post("/api/new/donation", donationData)
-            .then(function(){
+            .then(function () {
                 console.log("created new donation");
                 location.reload();
             }
@@ -79,40 +115,50 @@ $(document).ready(function () {
         window.location = "/" + userid;
     });
 
-    $("#viewRequests").on("click", function (event) {
+    // **************************************************************************************************************************
+
+    $(".viewRequests").on("click", function (event) {
         event.preventDefault();
-        window.location = "/requests/" + userid;
-        getDonatorCards();
+        var viewRequestsForThisCardId = $(this).data("id")
+        window.location = "/requests/" + viewRequestsForThisCardId + "/" + userid;
+        getRequests(viewRequestsForThisCardId);
     });
 
-    function getDonatorCards() {
-        $.get("/donatorcards/" + userid, function (res) {
-            getRequests(res);
-        })
+    // function getDonatorCards() {
+    //     $.get("/donatorcards/" + userid, function (res) {
+    //         getRequests(res);
+    //     })
+    // }
+
+    function getRequests(cardid) {
+        // for (i = 0; i < results.length; i++) {
+            $.get("/requests/" + cardid, function () {
+                console.log("all requests for donator card with id: " + cardid)
+            })
+        // }
     }
 
-    function getRequests(results) {
-        for (i = 0; i < results.length; i++) {
-            $.get("/requests/" + results.DonatorCardId, function () {})
-        }
-    }
+    // **************************************************************************************************************************
 
-    $("#viewDonations").on("click", function (event) {
+    $(".viewDonations").on("click", function (event) {
         event.preventDefault();
-        window.location = "/donations/" + userid;
-        getRequestorCards();
+        var viewDonationsForThisCardId = $(this).data("id")
+        window.location = "/donations/" + viewDonationsForThisCardId + "/" + userid;
+        getDonations(viewDonationsForThisCardId);
     });
 
-    function getRequestorCards() {
-        $.get("/requestorcards/" + userid, function (res) {
-            getDonations(res);
-        })
-    }
+    // function getRequestorCards() {
+    //     $.get("/requestorcards/" + userid, function (res) {
+    //         getDonations(res);
+    //     })
+    // }
 
-    function getDonations(results) {
-        for (i = 0; i < results.length; i++) {
-            $.get("/donations/" + results.RequestorCardId, function () {})
-        }
+    function getDonations(cardid) {
+        // for (i = 0; i < results.length; i++) {
+            $.get("/donations/" + cardid, function () {
+                console.log("all donations for requestor card with id: " + cardid)
+            })
+        // }
     }
 
     $("#viewCards").on("click", function (event) {
@@ -120,9 +166,12 @@ $(document).ready(function () {
         window.location = "/allusercards/" + userid;
     });
 
-    $(".acceptDonation").on("click", updateDonation, updateRequestorCard)
+    // **************************************************************************************************************************
 
-    function updateDonation () {
+    $(".acceptDonation").on("click", updateDonation)
+    $(".acceptDonation").on("click", updateRequestorCard)
+
+    function updateDonation() {
         var acceptDonationRequestorCardId = $(this).data("requestorcardid");
         var acceptDonationUserId = $(this).data("userid");
         var updateAccepted = {
@@ -132,10 +181,10 @@ $(document).ready(function () {
             method: "PUT",
             url: "/api/donation/" + acceptDonationRequestorCardId + "/" + acceptDonationUserId,
             data: updateAccepted
-        }).then(console.log("updated card: " + acceptDonationRequestorCardId + " with user id: " + acceptDonationUserId));
+        }).then(console.log("updated card: " + acceptDonationRequestorCardId + " with user id: " + acceptDonationUserId + "to accepted"));
     }
 
-    function updateRequestorCard () {
+    function updateRequestorCard() {
         var acceptDonationRequestorCardId = $(this).data("requestorcardid");
         var amount = $(this).data("amount");
         var updateAcceptedRequestorCard = {
@@ -147,5 +196,91 @@ $(document).ready(function () {
             data: updateAcceptedRequestorCard
         }).then(console.log("updated card: " + acceptDonationRequestorCardId));
     }
+
+    // **************************************************************************************************************************
+
+    $(".acceptRequest").on("click", updateRequest, updateDonatorCard)
+
+    function updateRequest() {
+        var acceptRequestDonatorCardId = $(this).data("donatorcardid");
+        var acceptRequestUserId = $(this).data("userid");
+        var updateAccepted = {
+            accepted: true
+        };
+        $.ajax({
+            method: "PUT",
+            url: "/api/request/" + acceptRequestDonatorCardId + "/" + acceptRequestUserId,
+            data: updateAccepted
+        }).then(console.log("updated card: " + acceptRequestDonatorCardId + " with user id: " + acceptRequestUserId + "to accepted"));
+    }
+
+    function updateDonatorCard() {
+        var acceptRequestDonatorCardId = $(this).data("donatorcardid");
+        var amount = $(this).data("amount");
+        var updateAcceptedDonatorCard = {
+            amount: amount
+        };
+        $.ajax({
+            method: "PUT",
+            url: "/api/updatedonatorcard/" + acceptRequestDonatorCardId,
+            data: updateAcceptedDonatorCard
+        }).then(console.log("updated card: " + acceptRequestDonatorCardId));
+    }
+
+    // **************************************************************************************************************************
+
+    $(".denyDonation").on("click", denyDonation)
+
+    function denyDonation () {
+        var denyDonationRequestorCardId = $(this).data("requestorcardid");
+        var denyDonationUserId = $(this).data("userid");
+        var updateDenied = {
+            accepted: false
+        };
+        $.ajax({
+            method: "PUT",
+            url: "/api/donation/" + denyDonationRequestorCardId + "/" + denyDonationUserId,
+            data: updateDenied
+        }).then(console.log("updated card: " + denyDonationRequestorCardId + " with user id: " + denyDonationUserId + "to denied"));
+    }
+
+    // function deleteDonation() {
+    //     var denyDonationRequestorCardId = $(this).data("requestorcardid");
+    //     var denyDonationUserId = $(this).data("userid");
+    //     $.ajax({
+    //         method: "DELETE",
+    //         url: "/api/delete/donation/" + denyDonationRequestorCardId + "/" + denyDonationUserId 
+    //     }).then(function () {
+    //         console.log("deleted donation")
+    //         location.reload();
+    //     });
+    // }
+
+    $(".denyRequest").on("click", denyRequest)
+
+    function denyRequest () {
+        var denyRequestDonatorCardId = $(this).data("donatorcardid");
+        var denyRequestUserId = $(this).data("userid");
+        var updateDenied = {
+            accepted: false
+        };
+        $.ajax({
+            method: "PUT",
+            url: "/api/request/" + denyRequestDonatorCardId + "/" + denyRequestUserId,
+            data: updateDenied
+        }).then(console.log("updated card: " + denyRequestDonatorCardId + " with user id: " + denyRequestUserId + "to denied"));
+    }
+
+    // function deleteRequest() {
+    //     var denyRequestDonatorCardId = $(this).data("donatorcardid");
+    //     var denyRequestUserId = $(this).data("userid");
+    //     $.ajax({
+    //         method: "DELETE",
+    //         url: "/api/delete/request/" + denyRequestDonatorCardId  + "/" + denyRequestUserId
+    //     }).then(function () {
+    //         console.log("deleted request")
+    //         location.reload();
+    //     });
+    // }
 
 })
