@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Nav from "../components/Nav/index";
 import API from "../utils/API";
-import { CardList, CardListItem } from "../components/CardList"
+import { Table, TableData } from "../components/Table"
+import Background from "../assets/images/bg1.jpg"
 
 class Cards extends Component {
     state = {
@@ -34,26 +35,38 @@ class Cards extends Component {
     }
 
     render() {
+        const Style = {
+            row: {
+                backgroundImage: 'url(' + Background + ')', 
+                backgroundSize: 'cover', 
+                backgroundPosition: 'center center',
+                backgroundRepeat: 'no-repeat',
+                height: "1000px"
+            }
+        }
+
         return (
             <div>
-                <Nav cards={this.getCards} />
-                <div className="row">
+                
+                <div className="row" style={Style.row}>
                     <div className="col-md-2"></div>
                     <div className="col-md-8">
+                    <Nav cards={this.getCards} />
                         <table className="table table-dark">
                             <thead>
-                                <CardList />
+                                <Table />
                             </thead>
 
                             {this.state.donatorCards.map(card => (
 
-                                <CardListItem
+                                <TableData
                                     key={card._id}
                                     location={card.location}
-                                    id={card._id}
+                                    id={card.UserId}
                                     category={card.category}
                                     image={card.image}
                                     item={card.item}
+                                    itemNumber={card.noOfItems}
                                 />))}
                         </table>
                     </div>

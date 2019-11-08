@@ -1,0 +1,6 @@
+@import "styles/site-mixins";
+
+.cards {
+  background: url(../assets/bg1.jpg) no-repeat top center fixed;
+  @include prefix(background-size, cover, webkit moz ms);
+}
