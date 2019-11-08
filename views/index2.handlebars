@@ -10,12 +10,12 @@
     <li class="nav-item">
         <button class="nav-link" id="homeButton">Home</button>
     </li>
-    <li class="nav-item">
+    {{!-- <li class="nav-item">
         <button class="nav-link" id="viewRequests">View Requests</button>
     </li>
     <li class="nav-item">
         <button class="nav-link" id="viewDonations">View Donations</button>
-    </li>
+    </li> --}}
     <li class="nav-item">
         <button class="nav-link" id="viewCards">Your Cards</button>
     </li>
@@ -30,25 +30,28 @@
             <h5 class="card-title">{{category}}</h5>
             <h5 class="card-title">{{item}} {{numberneeded}}</h5>
             <p class="card-text">Location: {{location}}</p>
+            <button class="btn viewDonations" data-id="{{id}}">View Donations</button>
             <button class="btn btn-danger deleteRequestorCard" data-id="{{id}}">Delete</button>
         </div>
     </div>
 </div>
 {{/each}}
-<br><br><hr>
+<br><br>
+<hr>
 <h1>Your Donator Cards</h1>
 {{!-- Donator cards --}}
 {{#each result}}
 <div class="d-inline-flex flex-row p-3">
-  <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="{{image}}" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">{{category}}</h5>
-      <h5 class="card-title">{{item}} {{itemnumber}}</h5>
-      <p class="card-text">Location: {{location}}</p>
-      <p class="card-text">Available Until: {{enddate}}</p>
-      <button class="btn btn-danger deleteDonatorCard" data-id={{id}}>Delete</button>
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{image}}" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">{{category}}</h5>
+            <h5 class="card-title">{{item}} {{itemnumber}}</h5>
+            <p class="card-text">Location: {{location}}</p>
+            <p class="card-text">Available Until: {{enddate}}</p>
+            <button class="btn viewRequests" data-id="{{id}}">View Donations</button>
+            <button class="btn btn-danger deleteDonatorCard" data-id={{id}}>Delete</button>
+        </div>
     </div>
-  </div>
 </div>
 {{/each}}

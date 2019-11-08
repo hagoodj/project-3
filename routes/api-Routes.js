@@ -3,20 +3,32 @@ var path = require('path');
 
 module.exports = function (app) {
 
-    app.get("/requestorcardform", function (req,res) {
+    app.get("/requestorcardform", function (req, res) {
         res.sendFile(path.join(__dirname + "/../public/assets/requestorcardform.html"));
     })
 
-    app.get("/:id", function (req, res) {
+    app.get("/api/:userid", function (req, res) {
 
-        db.RequestorCard.findAll({}).then(function (data) {
-            var requestorCardObject = {
-                requestorCards: data
-            };
-            res.render("index2", requestorCardObject)
+        db.User.findOne({
+            where: {
+                id: req.params.userid
+            }
+        }).then(function (result) {
+            res.json(result);
         });
 
-    });
+    })
+
+    // app.get("/:id", function (req, res) {
+
+    //     db.RequestorCard.findAll({}).then(function (data) {
+    //         var requestorCardObject = {
+    //             requestorCards: data
+    //         };
+    //         res.render("index2", requestorCardObject)
+    //     });
+
+    // });
 
     app.post("/api/new/requestorcard", function (req, res) {
 
@@ -36,23 +48,24 @@ module.exports = function (app) {
 
     // *****************************************************************************
 
-    app.get("/donatorcards/:userid", function (req, res) {
+    // app.get("/donatorcards/:userid", function (req, res) {
 
-        db.DonatorCard.findAll({
-            where: {
-                UserId: req.params.userid
-            }
-        }).then(function (dbDonatorCard) {
-            res.json(dbDonatorCard);
-        });
+    //     db.DonatorCard.findAll({
+    //         where: {
+    //             UserId: req.params.userid
+    //         }
+    //     }).then(function (dbDonatorCard) {
+    //         res.json(dbDonatorCard);
+    //     });
 
-    });
+    // });
 
-    app.get("/requests/:cardid", function (req, res) {
+    app.get("/requests/:cardid/:userid", function (req, res) {
 
         db.Request.findAll({
             where: {
-                DonatorCardId: req.params.cardid
+                DonatorCardId: req.params.cardid,
+                accepted: null
             }
         }).then(function (data) {
             var requestsObject = {
@@ -65,23 +78,24 @@ module.exports = function (app) {
 
     // *****************************************************************************
 
-    app.get("/requestorcards/:userid", function (req, res) {
+    // app.get("/requestorcards/:userid", function (req, res) {
 
-        db.RequestorCard.findAll({
-            where: {
-                UserId: req.params.userid
-            }
-        }).then(function (dbRequestorCard) {
-            res.json(dbRequestorCard);
-        });
+    //     db.RequestorCard.findAll({
+    //         where: {
+    //             UserId: req.params.userid
+    //         }
+    //     }).then(function (dbRequestorCard) {
+    //         res.json(dbRequestorCard);
+    //     });
 
-    });
+    // });
 
-    app.get("/donations/:cardid", function (req, res) {
+    app.get("/donations/:cardid/:userid", function (req, res) {
 
         db.Donation.findAll({
             where: {
-                RequestorCardId: req.params.cardid
+                RequestorCardId: req.params.cardid,
+                accepted: null
             }
         }).then(function (data) {
             var donationsObject = {
@@ -95,7 +109,7 @@ module.exports = function (app) {
     // ******************************************************************************
 
     app.put("/api/donation/:requestorcardid/:userid", function (req, res) {
-        console.log("accepted donation")
+        console.log("ACCEPTED DONATION")
         db.Donation.update({
             accepted: req.body.accepted
         }, {
@@ -161,7 +175,7 @@ module.exports = function (app) {
                     id: req.params.donatorcardid
                 }
             }).then(function (ressy) {
-                console.log("AFTER UPDATE BOI")
+                console.log("AFTER UPDATE")
                 res.json(ressy);
             });
         })
@@ -171,24 +185,48 @@ module.exports = function (app) {
 
     app.delete("/api/delete/donation/:cardid/:userid", function (req, res) {
         db.Donation.destroy({
-          where: {
-            RequestorCardId: req.params.cardid,
-            UserId: req.params.userid
-          }
+            where: {
+                RequestorCardId: req.params.cardid,
+                UserId: req.params.userid
+            }
         }).then(function (result) {
-          res.json(result);
+            res.json(result);
         });
-      });
+    });
 
-      app.delete("/api/delete/request/:cardid/:userid", function (req, res) {
+    app.delete("/api/delete/request/:cardid/:userid", function (req, res) {
         db.Request.destroy({
-          where: {
-            DonatorCardId: req.params.cardid,
-            UserId: req.params.userid
-          }
+            where: {
+                DonatorCardId: req.params.cardid,
+                UserId: req.params.userid
+            }
         }).then(function (result) {
-          res.json(result);
+            res.json(result);
         });
-      });
+    });
+
+    // ******************************************************************************
+
+    app.get("/api/acceptedrequests/:userid", function (req, res) {
+        db.Request.findAll({
+            where: {
+                UserId: req.params.userid,
+                accepted: 1
+            }
+        }).then(function (result) {
+            res.json(result);
+        });
+    })
+
+    app.get("/api/accepteddonations/:userid", function (req, res) {
+        db.Donation.findAll({
+            where: {
+                UserId: req.params.userid,
+                accepted: 1
+            }
+        }).then(function (result) {
+            res.json(result);
+        });
+    })
 
 }

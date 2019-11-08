@@ -5,17 +5,19 @@
   integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
   integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script src="../../assets/js/notify.js"></script>
 {{!-- Requestor Card --}}
 
 <ul class="nav">
     <li class="nav-item">
         <button class="nav-link" id="homeButton">Home</button>
     </li>
-    <li class="nav-item">
+    {{!-- <li class="nav-item">
         <button class="nav-link" id="viewRequests">View Requests</button>
-    </li>
+    </li> --}}
     <li class="nav-item">
-        <button class="nav-link" id="viewDonations">View Donations</button>
+        <button class="nav-link" id="viewNotifications">View Notifications</button>
     </li>
     <li class="nav-item">
         <button class="nav-link" id="viewCards">Your Cards</button>
@@ -31,7 +33,7 @@
             <h5 class="card-title">{{category}}</h5>
             <h5 class="card-title">{{item}} {{numberneeded}}</h5>
             <p class="card-text">Location: {{location}}</p>
-            <a href="#" class="btn btn-primary donate" data-id="{{id}}" data-toggle="modal"
+            <a href="#" class="btn btn-primary donate" data-id="{{id}}" data-item = "{{item}}" data-useremail = "{{useremail}}" data-toggle="modal"
                 data-target="#donateModal">Make Donation</a>
         </div>
     </div>
