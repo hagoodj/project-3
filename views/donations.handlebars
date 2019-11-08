@@ -10,12 +10,12 @@
     <li class="nav-item">
         <button class="nav-link" id="homeButton">Home</button>
     </li>
-    <li class="nav-item">
+    {{!-- <li class="nav-item">
         <button class="nav-link" id="viewRequests">View Requests</button>
     </li>
     <li class="nav-item">
         <button class="nav-link" id="viewDonations">View Donations</button>
-    </li>
+    </li> --}}
     <li class="nav-item">
         <button class="nav-link" id="viewCards">Your Cards</button>
     </li>
@@ -29,8 +29,8 @@
         {{!-- <img class="card-img-top" src="{{image}}" alt="Card image cap"> --}}
         <div class="card-body">
             <h5 class="card-title">A user has offered to donate {{amount}} of the item you have requested.</h5>
-            <button class = "acceptDonation" data-donationid = "{{id}}" data-value = "true">Accept Offer</button>
-            <button class = "denyDonation" data-donationid = "{{id}}" data-value = "false">Deny Offer</button>
+            <button class = "acceptDonation" data-requestorcardid = "{{RequestorCardId}}" data-userid = "{{UserId}}" data-amount = "{{amount}}" data-value = "true">Accept Offer</button>
+            <button class = "denyDonation" data-requestorcardid = "{{RequestorCardId}}" data-userid = "{{UserId}}" data-amount = "{{amount}}" data-value = "false">Deny Offer</button>
         </div>
     </div>
 </div>
