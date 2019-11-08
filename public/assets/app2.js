@@ -36,20 +36,95 @@ $(document).ready(function () {
         var numberneeded = $("#requestorCardNumberNeeded").val().trim();
         var priority = Boolean($("#requestorCardPriority").val());
         var image = $("#requestorCardImage").val().trim();
-        if (!category || !item || !location || !numberneeded || !priority) {
-            return;
-        } else {
-            console.log("inside else in add requestor card function")
+
+        // if (!category || !item || !location || !numberneeded || !priority) {
+        //     return;
+        // } else {
+            validateForm(category, item, location, numberneeded, priority);
+            getUserEmail(category, item, location, numberneeded, priority, image);
+        // }
+    });
+
+    // Validation Function
+    function validateForm(category, item, location, numberneeded, priority) {
+        if (category === "--None--") {
+            $("#requestorCardCategory").css({
+                "border": "2px solid red"
+            });
+            $("#requestorCardCategory").tooltip();
+        }
+        else {
+            $("#requestorCardCategory").css({
+                "border": "2px solid green"
+            });
+        }
+        if (item === "") {
+            $("#requestorCardItem").css({
+                "border": "2px solid red"
+            });
+            $("#requestorCardItem").tooltip();
+        }
+        else {
+            $("#requestorCardItem").css({
+                "border": "2px solid green"
+            });
+        }
+        if (location === "") {
+            $("#requestorCardLocation").css({
+                "border": "2px solid red"
+            });
+            $("#requestorCardLocation").tooltip();
+        }
+        else {
+            $("#requestorCardLocation").css({
+                "border": "2px solid green"
+            });
+        }
+        if (numberneeded === "") {
+            $("#requestorCardNumberNeeded").css({
+                "border": "2px solid red"
+            });
+            $("#requestorCardNumberNeeded").tooltip();
+        }
+        else {
+            if (typeof (numberneeded) == "number") {
+                $("#requestorCardNumberNeeded").css({
+                    "border": "2px solid green"
+                });
+            }
+            else {
+                $("#requestorCardNumberNeeded").css({
+                    "border": "2px solid black"
+                });
+                $("#requestorCardNumberNeeded").tooltip();
+            }
+        }
+        if (priority === "") {
+            $("#requestorCardPriority").css({
+                "border": "2px solid red"
+            });
+            $("#requestorCardPriority").tooltip();
+        }
+        else {
+            $("#requestorCardPriority").css({
+                "border": "2px solid green"
+            });
+        }
+    }
+
+    function getUserEmail(category, item, location, numberneeded, priority, image) {
+
             $.get("/api/" + userid, function() {
             }).then(function(result) {
                 console.log("result.email: " + result.email)
                 var useremail = result.email
                 addRequestorCard(category, item, location, numberneeded, priority, image, useremail);
             })
-        }
-    });
+        
+    }
 
     function addRequestorCard(category, item, location, numberneeded, priority, image, useremail) {
+
         console.log("adding RequestorCard")
         createRequestorCard({
             category: category,
@@ -64,7 +139,7 @@ $(document).ready(function () {
     }
 
     function createRequestorCard(requestorCardData) {
-        window.location.reload();
+        // window.location.reload();
         $.post("/api/new/requestorcard", requestorCardData)
             .then(console.log("created new requestor card"));
     }
@@ -130,6 +205,7 @@ $(document).ready(function () {
     //     })
     // }
 
+
     function getRequests(cardid) {
         // for (i = 0; i < results.length; i++) {
             $.get("/requests/" + cardid, function () {
@@ -152,6 +228,7 @@ $(document).ready(function () {
     //         getDonations(res);
     //     })
     // }
+
 
     function getDonations(cardid) {
         // for (i = 0; i < results.length; i++) {

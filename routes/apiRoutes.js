@@ -1,5 +1,8 @@
+const router = require("express").Router();
 var db = require("../models");
+const mongoDb = require("../mongodb_models");
 var path = require("path");
+const cardsController = require("../controllers/cardsController");
 
 module.exports = function (app) {
 
@@ -54,6 +57,19 @@ module.exports = function (app) {
             UserId: req.body.UserId
         }).then(function (result) {
             res.json(result);
+        }).catch(function (err) {
+            console.log(err);
+        })
+    })
+
+    // Inserting into Mongodb
+    app.post("/api/mongodb/donatorcard", function (req, res) {
+        console.log("INSIDE ROUTE........");
+        console.log(req.body);
+
+        mongoDb.DonatorCard.create(req.body).then(function (dbDictionary) {
+            console.log(dbDictionary);
+            console.log("INSERTED INTO MONGOOSE TABLE");
         }).catch(function (err) {
             console.log(err);
         })
@@ -118,7 +134,7 @@ module.exports = function (app) {
             where: {
                 id: id
             }
-        }).then(function(result){
+        }).then(function (result) {
             res.json(result);
         })
     })
@@ -131,7 +147,7 @@ module.exports = function (app) {
             where: {
                 id: id
             }
-        }).then(function(result){
+        }).then(function (result) {
             res.json(result);
         })
     })
@@ -144,7 +160,7 @@ module.exports = function (app) {
             where: {
                 id: id
             }
-        }).then(function(result){
+        }).then(function (result) {
             res.json(result);
         })
     })
