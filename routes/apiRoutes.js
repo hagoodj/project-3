@@ -54,7 +54,8 @@ module.exports = function (app) {
             itemnumber: req.body.noOfItems,
             location: req.body.location,
             image: req.body.image,
-            UserId: req.body.UserId
+            UserId: req.body.UserId,
+            useremail: req.body.useremail
         }).then(function (result) {
             res.json(result);
         }).catch(function (err) {
@@ -83,7 +84,9 @@ module.exports = function (app) {
         db.Request.create({
             amount: req.body.amount,
             UserId: req.body.userId,
-            DonatorCardId: req.body.donatorCardId
+            DonatorCardId: req.body.donatorCardId,
+            item: req.body.item,
+            donatoremail: req.body.donatoremail
         }).then(function (result) {
             res.json(result);
         }).catch(function (err) {

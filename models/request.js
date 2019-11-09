@@ -5,6 +5,12 @@ module.exports = function(sequelize, DataTypes) {
         },
         accepted: {
             type: DataTypes.BOOLEAN
+        },
+        item: {
+            type: DataTypes.STRING
+        },
+        donatoremail: {
+            type: DataTypes.STRING
         }
     })
     return Request

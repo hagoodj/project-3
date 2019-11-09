@@ -29,6 +29,9 @@ module.exports = function (sequelize, DataTypes) {
         },
         image: {
             type: DataTypes.STRING
+        },
+        useremail: {
+            type: DataTypes.STRING,
         }
     });
     

@@ -62,10 +62,10 @@
               <option value="none">--None--</option>
               <option value="food">Food</option>
               <option value="clothing">Clothing</option>
-              <option value="clothing">School Supplies</option>
-              <option value="clothing">Household Items</option>
-              <option value="clothing">Cleaning Supplies</option>
-              <option value="clothing">Misc</option>
+              <option value="schoolsupplies">School Supplies</option>
+              <option value="householditems">Household Items</option>
+              <option value="cleaningsupplies">Cleaning Supplies</option>
+              <option value="misc">Misc</option>
             </select>
           </div>
           <div class="form-group">
@@ -148,7 +148,7 @@
       <h5 class="card-title">{{item}} {{itemnumber}}</h5>
       <p class="card-text">Location: {{location}}</p>
       <p class="card-text">Available Until: {{enddate}}</p>
-      <button class="btn btn-success" id="requestDonation" data-id={{id}}>Request Donation</button>
+      <button class="btn btn-success" id="requestDonation" data-id={{id}} data-item = "{{item}}" data-useremail = "{{useremail}}">Request Donation</button>
     </div>
   </div>
 </div>
@@ -188,10 +188,10 @@
               <option value="none">--None--</option>
               <option value="food">Food</option>
               <option value="clothing">Clothing</option>
-              <option value="clothing">School Supplies</option>
-              <option value="clothing">Household Items</option>
-              <option value="clothing">Cleaning Supplies</option>
-              <option value="clothing">Misc</option>
+              <option value="schoolsupplies">School Supplies</option>
+              <option value="householditems">Household Items</option>
+              <option value="cleaningsupplies">Cleaning Supplies</option>
+              <option value="misc">Misc</option>
             </select>
           </div>
           <div class="form-group">
