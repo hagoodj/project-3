@@ -229,4 +229,26 @@ module.exports = function (app) {
         });
     })
 
+    app.get("/api/deniedrequests/:userid", function (req, res) {
+        db.Request.findAll({
+            where: {
+                UserId: req.params.userid,
+                accepted: 0
+            }
+        }).then(function (result) {
+            res.json(result);
+        });
+    })
+
+    app.get("/api/denieddonations/:userid", function (req, res) {
+        db.Donation.findAll({
+            where: {
+                UserId: req.params.userid,
+                accepted: 0
+            }
+        }).then(function (result) {
+            res.json(result);
+        });
+    })
+
 }

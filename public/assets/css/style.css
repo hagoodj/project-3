@@ -4,11 +4,20 @@ body {
     background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    overflow: hidden;
+    overflow: scroll;
 }
 
 textarea {
     resize: none;
+}
+
+.priority {
+    background-color: #f8d7da;
+}
+
+.card-img-top {
+    height: 225px;
+    width: 300px;
 }
 
 h8 {

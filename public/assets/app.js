@@ -20,8 +20,29 @@ $(document).ready(function () {
         var noOfItems = $("#input-noOfItems").val().trim();
         var location = $("#input-location").val().trim();
         var image = $("#input-image").val().trim();
+        if (!image) {
+            switch (category) {
+                case "Food":
+                    image = "../assets/img/food.JPG"
+                    break;
+                case "Clothing":
+                    image = "../assets/img/clothing.JPG"
+                    break;
+                case "School Supplies":
+                    image = "../assets/img/schoolsupplies.JPG"
+                    break;
+                case "Household Items":
+                    image = "../assets/img/householditems.JPG"
+                    break;
+                case "Cleaning Supplies":
+                    image = "../assets/img/cleaningsupplies.JPG"
+                    break;
+                default:
+                    image = "../assets/img/misc.JPG"
+            }
+        }
         validateForm(startDate, endDate, category, item, noOfItems, location);
-        populateDonatorCards(startDate, endDate, category, item, noOfItems, location, image);
+        getUserEmail(startDate, endDate, category, item, noOfItems, location, image);
     })
 
     // Function to validate form
@@ -146,8 +167,19 @@ $(document).ready(function () {
         return day > 0 && day <= monthLength[month - 1];
     };
 
+    function getUserEmail(startDate, endDate, category, item, noOfItems, location, image) {
+
+        $.get("/api/" + userId, function () {
+        }).then(function (result) {
+            console.log("result.email: " + result.email)
+            var useremail = result.email
+            populateDonatorCards(startDate, endDate, category, item, noOfItems, location, image, useremail);
+        })
+
+    }
+
     // Function that populates values to Donator Cards
-    function populateDonatorCards(startDate, endDate, category, item, noOfItems, location, image) {
+    function populateDonatorCards(startDate, endDate, category, item, noOfItems, location, image, useremail) {
         // New object that holds all user values
         var donation = {
             startDate: startDate,
@@ -157,7 +189,8 @@ $(document).ready(function () {
             noOfItems: noOfItems,
             location: location,
             image: image,
-            UserId: userId
+            UserId: userId,
+            useremail: useremail
         }
 
         // Post a new value to database
@@ -193,6 +226,9 @@ $(document).ready(function () {
         location.reload();
     })
 
+    var useremail;
+    var item;
+
     // On click of request donation button
     // $("#requestDonation").on("click", function (event) {
     $(document).on("click", "#requestDonation", function (event) {
@@ -200,6 +236,10 @@ $(document).ready(function () {
         id = $(this).data("id");
         donatorCardId = id;
         console.log(id);
+        item = $(this).data("item");
+        console.log("grabbing item from #requestDonation: ")
+        console.log(item)
+        useremail = $(this).data("useremail");
         console.log("Inside request donation button");
         $("#request-donation-modal").modal("toggle");
     })
@@ -218,7 +258,9 @@ $(document).ready(function () {
         var data = {
             amount: amount,
             userId: userId,
-            donatorCardId: donatorCardId
+            donatorCardId: donatorCardId,
+            item: item,
+            donatoremail: useremail
         }
         // Post a new value to database
         $.ajax("/api/new/request", {
