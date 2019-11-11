@@ -315,7 +315,7 @@ $(document).ready(function () {
     }
 
     function createRequestorCard(requestorCardData) {
-        // window.location.reload();
+        location.reload();
         $.post("/api/new/requestorcard", requestorCardData)
             .then(console.log("created new requestor card"));
     }
@@ -435,6 +435,7 @@ $(document).ready(function () {
             url: "/api/donation/" + acceptDonationRequestorCardId + "/" + acceptDonationUserId,
             data: updateAccepted
         }).then(console.log("updated card: " + acceptDonationRequestorCardId + " with user id: " + acceptDonationUserId + "to accepted"));
+        location.reload();
     }
 
     function updateRequestorCard() {
@@ -466,6 +467,7 @@ $(document).ready(function () {
             url: "/api/request/" + acceptRequestDonatorCardId + "/" + acceptRequestUserId,
             data: updateAccepted
         }).then(console.log("updated card: " + acceptRequestDonatorCardId + " with user id: " + acceptRequestUserId + "to accepted"));
+        location.reload();
     }
 
     function updateDonatorCard() {
@@ -496,6 +498,7 @@ $(document).ready(function () {
             url: "/api/donation/" + denyDonationRequestorCardId + "/" + denyDonationUserId,
             data: updateDenied
         }).then(console.log("updated card: " + denyDonationRequestorCardId + " with user id: " + denyDonationUserId + "to denied"));
+        location.reload();
     }
 
     function deleteDonation(userid, cardid) {
@@ -521,6 +524,7 @@ $(document).ready(function () {
             url: "/api/request/" + denyRequestDonatorCardId + "/" + denyRequestUserId,
             data: updateDenied
         }).then(console.log("updated card: " + denyRequestDonatorCardId + " with user id: " + denyRequestUserId + "to denied"));
+        location.reload();
     }
 
     function deleteRequest(userid, cardid) {

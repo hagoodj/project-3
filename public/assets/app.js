@@ -209,7 +209,7 @@ $(document).ready(function () {
             console.log("Inserted into mongod table");
         })
 
-        // location.reload();
+        window.location.reload();
     }
 
     // On click of add button generates a modal with a form to add new card

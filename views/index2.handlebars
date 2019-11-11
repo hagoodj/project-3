@@ -20,6 +20,9 @@
     <li class="nav-item">
         <button class="nav-link btn btn-info" id="viewCards">Your Cards</button>
     </li>
+    <li class="nav-item">
+        <a href="/"><button class="nav-link btn btn-info" id="logout">Logout</button></a>
+    </li>
 </ul>
 {{!-- Requestor Cards --}}
 <div class="row">
@@ -71,7 +74,7 @@
     <div class="col-md-8">
         {{#each result}}
         <div class="d-inline-flex flex-row p-3">
-            <div class="card collapse" style="width: 18rem;"id="viewYourDonations">
+            <div class="card collapse" style="width: 18rem;" id="viewYourDonations">
                 <img class="card-img-top" src="{{image}}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">{{category}}</h5>
