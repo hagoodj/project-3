@@ -22,19 +22,19 @@ $(document).ready(function () {
         var image = $("#input-image").val().trim();
         if (!image) {
             switch (category) {
-                case "food":
+                case "Food":
                     image = "../assets/img/food.JPG"
                     break;
-                case "clothing":
+                case "Clothing":
                     image = "../assets/img/clothing.JPG"
                     break;
-                case "schoolsupplies":
+                case "School Supplies":
                     image = "../assets/img/schoolsupplies.JPG"
                     break;
-                case "householditems":
+                case "Household Items":
                     image = "../assets/img/householditems.JPG"
                     break;
-                case "cleaningsupplies":
+                case "Cleaning Supplies":
                     image = "../assets/img/cleaningsupplies.JPG"
                     break;
                 default:

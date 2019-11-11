@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     var userid = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
     // var userid = 1;
-    var uniqueCardId;
+    // var uniqueCardId;
 
     // style for all notifiations
     $.notify.addStyle('notifications', {
@@ -159,23 +159,23 @@ $(document).ready(function () {
         var item = $("#requestorCardItem").val().trim();
         var location = $("#requestorCardLocation").val().trim();
         var numberneeded = $("#requestorCardNumberNeeded").val().trim();
-        var priority = Boolean($("#requestorCardPriority").val());
+        var priority = document.querySelector('input[name="requestorCardPriority"]:checked').value;
         var image = $("#requestorCardImage").val().trim();
         if (!image) {
             switch (category) {
-                case "food":
+                case "Food":
                     image = "../assets/img/food.JPG"
                     break;
-                case "clothing":
+                case "Clothing":
                     image = "../assets/img/clothing.JPG"
                     break;
-                case "schoolsupplies":
+                case "School Supplies":
                     image = "../assets/img/schoolsupplies.JPG"
                     break;
-                case "householditems":
+                case "Household Items":
                     image = "../assets/img/householditems.JPG"
                     break;
-                case "cleaningsupplies":
+                case "Cleaning Supplies":
                     image = "../assets/img/cleaningsupplies.JPG"
                     break;
                 default:

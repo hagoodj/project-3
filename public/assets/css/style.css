@@ -11,6 +11,15 @@ textarea {
     resize: none;
 }
 
+.priority {
+    background-color: #f8d7da;
+}
+
+.card-img-top {
+    height: 225px;
+    width: 300px;
+}
+
 h8 {
     color: grey;
     font-family: 'Gotham';
