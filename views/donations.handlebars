@@ -4,36 +4,49 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-            <script src="../../assets/js/notify.js"></script>
+<script src="../../assets/js/notify.js"></script>
 
 {{!-- <script src="../assets/app2.js"></script> --}}
 
-<ul class="nav">
+<ul class="nav shadow-lg p-3 mb-5 bg-dark rounded">
     <li class="nav-item">
-        <button class="nav-link" id="homeButton">Home</button>
+        <button class="nav-link btn btn-info" id="homeButton">Home</button>
     </li>
     {{!-- <li class="nav-item">
-        <button class="nav-link" id="viewRequests">View Requests</button>
+        <button class="nav-link btn btn-info" id="viewRequests">View Requests</button>
     </li>
     <li class="nav-item">
-        <button class="nav-link" id="viewDonations">View Donations</button>
+        <button class="nav-link btn btn-info" id="viewDonations">View Donations</button>
     </li> --}}
     <li class="nav-item">
-        <button class="nav-link" id="viewCards">Your Cards</button>
+        <button class="nav-link btn btn-info" id="viewCards">Your Cards</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link btn btn-info" id="#">Logout</button>
     </li>
 </ul>
 
-<h2>View all donations for your requests below!</h2>
-
-{{#each donations}}
-<div class="d-inline-flex flex-row p-3">
-    <div class="card" style="width: 18rem;">
-        {{!-- <img class="card-img-top" src="{{image}}" alt="Card image cap"> --}}
-        <div class="card-body">
-            <h5 class="card-title">A user has offered to donate {{amount}} of the item you have requested.</h5>
-            <button class = "acceptDonation" data-requestorcardid = "{{RequestorCardId}}" data-userid = "{{UserId}}" data-amount = "{{amount}}" data-value = "true">Accept Offer</button>
-            <button class = "denyDonation" data-requestorcardid = "{{RequestorCardId}}" data-userid = "{{UserId}}" data-amount = "{{amount}}" data-value = "false">Deny Offer</button>
-        </div>
-    </div>
+<div class="alert alert-info" role="alert">
+    <h2>View all donations for your requests below!</h2>
 </div>
-{{/each}}
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        {{#each donations}}
+        <div class="d-inline-flex flex-row p-3">
+            <div class="card" style="width: 18rem;">
+                {{!-- <img class="card-img-top" src="{{image}}" alt="Card image cap"> --}}
+                <div class="card-body">
+                    <h5 class="card-title">A user has offered to donate {{amount}} of the item you have requested.</h5>
+                    <button class="acceptDonation btn btn-info" data-requestorcardid="{{RequestorCardId}}"
+                        data-userid="{{UserId}}" data-amount="{{amount}}" data-value="true">Accept</button>
+                    <button class="denyDonation btn btn-danger" data-requestorcardid="{{RequestorCardId}}"
+                        data-userid="{{UserId}}" data-amount="{{amount}}" data-value="false">Deny</button>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <div class="col-md-2"></div>
+</div>

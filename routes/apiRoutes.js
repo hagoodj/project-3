@@ -29,7 +29,7 @@ module.exports = function (app) {
                         priority: 1
                     }
                 }).then(function (priority) {
-    
+
                     resultObj = {
                         priority: priority,
                         result: result,
@@ -72,6 +72,31 @@ module.exports = function (app) {
             res.json(result);
         }).catch(function (err) {
             console.log(err);
+        })
+    })
+
+    // Get all so that number needed column is checked
+    app.get("/api/numberneeded", function (req, res) {
+        db.RequestorCard.findAll({
+        }).then(function (result) {
+            console.log("FIND ALL QUERY RESULT");
+            console.log(result);
+            console.log(result.numberneeded);
+            res.send(result);
+        })
+
+    })
+
+    // To delete when number of items is zero from requestor card
+    app.put("/api/delete/requestorcard/:id", function (req, res) {
+        var id = req.params.id;
+
+        db.RequestorCard.destroy({
+            where: {
+                id: id
+            }
+        }).then(function (result) {
+            res.json(result);
         })
     })
 

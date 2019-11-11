@@ -3,6 +3,7 @@ $(document).ready(function () {
     var userid = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
     // var userid = 1;
     // var uniqueCardId;
+    checkNumberOfItems();
 
     // style for all notifiations
     $.notify.addStyle('notifications', {
@@ -29,6 +30,35 @@ $(document).ready(function () {
             }
         }
     });
+
+    // Function to check if number of items in card is zero
+    function checkNumberOfItems() {
+        console.log("Inside numberof items needed");
+        $.ajax("/api/numberneeded", {
+            type: "GET"
+        }).then(
+            function (result) {
+                console.log(result);
+                for (var i = 0; i < result.length; i++) {
+                    if (result[i].numberneeded === 0) {
+                        console.log(result[i].id);
+                        deleteRequestorCard(result[i].id);
+                    }
+                }
+            }
+        )
+    }
+
+    // Function to delete requestor cards that has number needed value zero
+    function deleteRequestorCard(id) {
+        $.ajax("/api/delete/requestorcard/" + id, {
+            type: "PUT"
+        }).then(function (result) {
+            console.log(result);
+            console.log("Deleted requestor Card");
+            location.reload();
+        })
+    }
 
     //listen for click events from this style
     $(document).on('click', '.closeRequestNotification', function () {

@@ -9,61 +9,92 @@
 <script src="../../assets/js/notify.js"></script>
 {{!-- Requestor Card --}}
 
-<ul class="nav">
+<ul class="nav shadow-lg p-3 mb-5 bg-dark rounded">
 
   <li class="nav-item">
-    <button class="nav-link" id="homeButton">Home</button>
+    <button class="nav-link btn btn-info" id="homeButton">Home</button>
   </li>
   {{!-- <li class="nav-item">
-        <button class="nav-link" id="viewRequests">View Requests</button>
+        <button class="nav-link btn btn-info" id="viewRequests">View Requests</button>
     </li> --}}
   <li class="nav-item">
-    <button class="nav-link" id="viewNotifications">View Notifications</button>
+    <button class="nav-link btn btn-info" id="viewNotifications">View Notifications</button>
   </li>
   <li class="nav-item">
-    <button class="nav-link" id="viewCards">Your Cards</button>
+    <button class="nav-link btn btn-info" id="viewCards">Your Cards</button>
+  </li>
+  <li class="nav-item">
+    <a href="assets/index.html"><button class="nav-link btn btn-info" id="logout">Logout</button></a>
   </li>
 </ul>
 
-{{#each priority}}
-<div class="priority d-inline-flex flex-row p-3">
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    {{#each priority}}
+    <div class="priority d-inline-flex flex-row p-3">
 
-  <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="{{image}}" alt="Card image cap">
-    <div class="card-body">
-      <h3 class= "text-danger">PRIORITY</h3>
-      <h5 class="card-title">{{category}}</h5>
-      <h5 class="card-title">{{item}} {{numberneeded}}</h5>
-      <p class="card-text">Location: {{location}}</p>
-      <a href="#" class="btn btn-primary donate" data-id="{{id}}" data-item="{{item}}" data-useremail="{{useremail}}"
-        data-toggle="modal" data-target="#donateModal">Make Donation</a>
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{image}}" alt="Card image cap">
+        <div class="card-body">
+          <h3 class="text-danger">PRIORITY</h3>
+          <h5 class="card-title">{{category}}</h5>
+          <h5 class="card-title">{{item}} {{numberneeded}}</h5>
+          <p class="card-text">Location: {{location}}</p>
+          <a href="#" class="btn btn-primary donate" data-id="{{id}}" data-item="{{item}}"
+            data-useremail="{{useremail}}" data-toggle="modal" data-target="#donateModal">Make Donation</a>
+        </div>
+      </div>
     </div>
   </div>
+  {{/each}}
 </div>
+<div class="col-md-2"></div>
 </div>
-{{/each}}
-<hr>
-<h1>Requestors</h1>
-<hr>
-{{#each requestorCards}}
-<div class="d-inline-flex flex-row p-3">
 
-  <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="{{image}}" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">{{category}}</h5>
-      <h5 class="card-title">{{item}} {{numberneeded}}</h5>
-      <p class="card-text">Location: {{location}}</p>
-      <a href="#" class="btn btn-primary donate" data-id="{{id}}" data-item="{{item}}" data-useremail="{{useremail}}"
-        data-toggle="modal" data-target="#donateModal">Make Donation</a>
-    </div>
+<hr>
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <a class="btn btn-primary btn-lg" data-toggle="collapse" href="#viewRequests" role="button" aria-expanded="false"
+      aria-controls="viewRequests">
+      View Requests
+    </a>
   </div>
+  <div class="col-md-2"></div>
 </div>
-</div>
-{{/each}}
 
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#makeRequestModal"><i
-    class="fas fa-plus-circle"></i></button>
+{{!-- <div class="container"> --}}
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    {{#each requestorCards}}
+    <div class="d-inline-flex flex-row p-3">
+      <div class="card collapse" style="width: 18rem;" id="viewRequests">
+        <img class="card-img-top" src="{{image}}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{category}}</h5>
+          <h5 class="card-title">{{item}} {{numberneeded}}</h5>
+          <p class="card-text">Location: {{location}}</p>
+          <a href="#" class="btn btn-primary donate" data-id="{{id}}" data-item="{{item}}"
+            data-useremail="{{useremail}}" data-toggle="modal" data-target="#donateModal">Make Donation</a>
+        </div>
+      </div>
+    </div>
+  {{/each}}
+</div>
+<div class="col-md-2"></div>
+</div>
+{{!-- </div> --}}
+
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#makeRequestModal">Make a new
+      Request <i class="fas fa-plus-circle"></i></button>
+  </div>
+  <div class="col-md-2"></div>
+</div>
 
 <div class="modal fade" id="makeRequestModal" role="dialog">
   <div class="modal-dialog">
@@ -161,25 +192,47 @@
 
 
 {{!-- Donator card --}}
-<h1>Donators</h1>
-<hr>
-{{#each result}}
-<div class="d-inline-flex flex-row p-3">
-  <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="{{image}}" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">{{category}}</h5>
-      <h5 class="card-title">{{item}} {{itemnumber}}</h5>
-      <p class="card-text">Location: {{location}}</p>
-      <p class="card-text">Available Until: {{enddate}}</p>
-      <button class="btn btn-success" id="requestDonation" data-id={{id}} data-item="{{item}}"
-        data-useremail="{{useremail}}">Request Donation</button>
-    </div>
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <a class="btn btn-primary btn-lg" data-toggle="collapse" href="#viewDonations" role="button" aria-expanded="false"
+      aria-controls="viewDonations">
+      View Donations
+    </a>
   </div>
+  <div class="col-md-2"></div>
 </div>
-{{/each}}
+
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    {{#each result}}
+    <div class="d-inline-flex flex-row p-3">
+      <div class="card collapse" style="width: 18rem;" id="viewDonations">
+        <img class="card-img-top" src="{{image}}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{category}}</h5>
+          <h5 class="card-title">{{item}} {{itemnumber}}</h5>
+          <p class="card-text">Location: {{location}}</p>
+          <p class="card-text">Available Until: {{enddate}}</p>
+          <button class="btn btn-success" id="requestDonation" data-id={{id}} data-item="{{item}}"
+            data-useremail="{{useremail}}">Request Donation</button>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  <div class="col-md-2"></div>
+</div>
+
 {{!-- Button to add a new card --}}
-<button class="btn btn-info btn-lg" id="add-btn"><i class="fas fa-plus-circle"></i></button>
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <button class="btn btn-info btn-lg" id="add-btn">MAKE A DONATION <i class="fas fa-plus-circle"></i></button>
+  </div>
+  <div class="col-md-2"></div>
+</div>
 {{!-- Modal --}}
 
 <div class="modal" tabindex="-1" role="dialog" id="add-modal">
