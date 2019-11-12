@@ -121,7 +121,7 @@ $(document).ready(function () {
                 uniqueButton.data("cardid", uniqueCardId);
                 uniqueButton.attr("class", "btn-danger closeDonationNotification");
                 $.notify({
-                    title: "Your donation of " + data[i].amount + data[i].item + "s has been accepted.<br>Please contact " + data[i].requestoremail + " to coordinate exchange.<br>Once you close this notificaiton, you will no longer be able to see this email address.",
+                    title: "Your donation of " + data[i].amount + data[i].item + " has been accepted.<br>Please contact " + data[i].requestoremail + " to coordinate exchange.<br>Once you close this notificaiton, you will no longer be able to see this email address.",
                     button: uniqueButton
                 }, {
                     style: 'notifications',
@@ -171,7 +171,7 @@ $(document).ready(function () {
                 uniqueButton.attr("cardid", uniqueCardId);
                 uniqueButton.attr("class", "btn-danger closeDonationNotification");
                 $.notify({
-                    title: "Your donation of " + data[i].amount + data[i].item + "s has been accepted.<br>Please feel free to donate to others.",
+                    title: "Your donation of " + data[i].amount + data[i].item + " has been accepted.<br>Please feel free to donate to others.",
                     button: uniqueButton
                 }, {
                     style: 'notifications',
