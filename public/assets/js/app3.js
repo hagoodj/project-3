@@ -10,6 +10,7 @@ $(document).ready(function () {
 
     function getUser(username, password) {
         $.get("/api/" + username + "/" + password, function (data) {
+            console.log("HHELLELLLEOOOOO")
             console.log(data)
             uniqueUserId = data.id;
             window.location = "/" + uniqueUserId;
